@@ -17,6 +17,11 @@ const Teacher = database.define('Teacher', {
         type: DataTypes.STRING,
         allowNull: false,
         primaryKey: true
+    },
+    isIdealizer: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
     }
 }, {
     freezeTableName: true
