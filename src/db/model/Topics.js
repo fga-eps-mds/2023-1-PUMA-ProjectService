@@ -8,7 +8,6 @@ const Topics = database.define('Topics', {
         autoIncrement: true,
         primaryKey: true,
     },
-
     title: {
         type: DataTypes.STRING,
         allowNull: false
@@ -17,7 +16,6 @@ const Topics = database.define('Topics', {
         type: DataTypes.STRING,
         allowNull: false
     },
-
 }, {
     freezeTableName: true
 })
