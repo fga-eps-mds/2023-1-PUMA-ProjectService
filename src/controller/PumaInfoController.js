@@ -22,7 +22,7 @@ module.exports = {
             const pumaInfoResponse = await pumaInfoRepository.updatePuma_Info(pumaItem);
 
             resolve({
-                pumaItem: pumaInfoResponse,
+                pumaInfo: pumaInfoResponse,
             });
         } catch (e) {
             reject(e);

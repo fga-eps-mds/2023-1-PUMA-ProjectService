@@ -11,7 +11,7 @@ routes.get('/pumaInfo', (req, res) => {
 });
 
 
-routes.put('/pumaInfo/:infoId', (req, res) => {
+routes.put('/pumaInfo', (req, res) => {
   pumaInfoController.updatePuma_Info(req.body).then((response) => {
     res.status(200).json(response);
   }).catch((response) => {
