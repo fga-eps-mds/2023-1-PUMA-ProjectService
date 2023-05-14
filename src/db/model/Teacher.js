@@ -1,3 +1,4 @@
+/* eslint-disable */
 const { DataTypes } = require('sequelize');
 const database = require('../AppDb');
 
