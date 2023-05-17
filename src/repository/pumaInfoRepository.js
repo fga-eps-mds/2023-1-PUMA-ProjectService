@@ -12,12 +12,35 @@ const Teacher = require("../db/model/Teacher");
 module.exports = {
   // Get all Puma infos
   getPuma_Infos: () =>
-    new Promise((resolve, reject) => {
-      Puma_Infos.findAll()
-        .then((response) => {
-          resolve(response[0]);
-        })
-        .catch((e) => reject(e));
+    new Promise(async(resolve, reject) => {
+      try{
+
+        const pumaInfos = await Puma_Infos.findAll()
+        const topicos = await Topics.findAll()
+        const moreInfos = await More_info.findAll()
+        const idealizers = await Teacher.findAll({where:{
+          isIdealizer: true
+        }});
+
+        const topicosResponse = topicos.map(async(topic) => {
+          const topicosResponse = {
+            topic,
+            sections: await Section.findAll({where:{
+              topicId: topic.topicId
+            }})
+          }
+          return topicosResponse;
+        } )
+        const response = {
+          ...pumaInfos,
+          topics: topicosResponse,
+          moreInfos,
+          idealizers
+        }
+        resolve(response);
+      } catch(e){
+        reject(e);
+      }
     }),
 
   // Update PUMA Infos
@@ -94,7 +117,7 @@ module.exports = {
           description: section.description,
         });
       } else {
-        await Topics.update(
+        await Section.update(
           {
             title: section.title,
             description: section.description,

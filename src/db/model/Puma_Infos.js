@@ -28,7 +28,7 @@ const Puma_Infos = database.define('Puma_Infos',{
         type: DataTypes.TEXT,
         allowNull: true
     },
-
+}, {
     freezeTableName: true
 })
 
