@@ -61,41 +61,37 @@ module.exports = {
   // Update PUMA Infos
   updatePuma_Info: (input) =>
     new Promise(async (resolve, reject) => {
+      console.log(`Input: `, input)
       const {
-        description,
-        goal,
-        methodology,
-        methodologyImage,
-        goalImage,
+        pumaItem,
         topics,
         moreInfos,
-        sections,
-        teachers
+        teachers,
       } = input;
-      const pumaInfo = await module.exports.getPuma_Infos();
 
-      const {
-        0: item
-      } = pumaInfo;
+      // const pumaInfo = await module.exports.getPuma_Infos();
 
       Puma_Infos.update(
         {
-          description,
-          goal,
-          methodology,
-          methodologyImage,
-          goalImage,
+          description: pumaItem.description,
+          goal: pumaItem.goal,
+          methodology: pumaItem.methodology,
+          methodologyImage: pumaItem.methodologyImage,
+          goalImage: pumaItem.goalImage,
         },
         {
           where: {
-            infoId: item.infoId,
+            infoId: pumaItem.infoId,
           },
         }
       )
         .then(async (response) => {
           await module.exports.update_topics(topics);
+            const sectionsArray = topics.map(topic => {
+              console.log(topic)
+              return topic.sections
+            })
 
-          const sectionsArray = topics.map(topic => topic.sections)
           await module.exports.update_sections(sectionsArray);
 
           await module.exports.update_more_info(moreInfos);
@@ -141,6 +137,7 @@ module.exports = {
   },
 
   update_sections: async (sections) => {
+
     const ids = []
     sections.forEach(element => {
       element.forEach(item => {

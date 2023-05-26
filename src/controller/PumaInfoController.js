@@ -16,9 +16,6 @@ module.exports = {
 
     updatePuma_Info: (input) => new Promise(async (resolve, reject) => {
         try {
-            const {
-                0: pumaItem
-            } = input;
             const pumaInfoResponse = await pumaInfoRepository.updatePuma_Info(input);
 
             resolve({
