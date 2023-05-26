@@ -8,6 +8,7 @@ const Topics = require("../db/model/Topics");
 const Section = require("../db/model/Section");
 const More_info = require("../db/model/More_Info");
 const Teacher = require("../db/model/Teacher");
+const Common_User = require("../db/model/Common_User");
 
 module.exports = {
   // Get all Puma infos
@@ -18,11 +19,25 @@ module.exports = {
         const pumaInfos = await Puma_Infos.findAll()
         const topicos = await Topics.findAll()
         const moreInfos = await More_info.findAll()
-        const idealizers = await Teacher.findAll({where:{
-          isIdealizer: true
-        }});
+        const teachers = await Teacher.findAll();
 
-        const topicosResponse = topicos.map(async(topic) => {
+        const teachersResponse = []
+
+        for(const teacher of teachers) {
+          const teacherComplementaryInfos = await Common_User.findOne({
+            where: {
+              userId: teacher.userId
+            }
+          })
+          teachersResponse.push({
+            ...teacher,
+            fullName: teacherComplementaryInfos.fullName,
+            email: teacherComplementaryInfos.email,
+            phoneNumber: teacherComplementaryInfos.phoneNumber
+          })
+        }
+
+        const topicosResponse = await Promise.all(topicos.map(async(topic) => {
           const topicosResponse = {
             topic,
             sections: await Section.findAll({where:{
@@ -30,12 +45,12 @@ module.exports = {
             }})
           }
           return topicosResponse;
-        } )
+        }))
         const response = {
           ...pumaInfos,
           topics: topicosResponse,
           moreInfos,
-          idealizers
+          teachers: teachersResponse
         }
         resolve(response);
       } catch(e){
