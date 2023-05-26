@@ -72,7 +72,11 @@ module.exports = {
         sections,
         teachers
       } = input;
-      const pumaInfo = await getPuma_Infos();
+      const pumaInfo = await module.exports.getPuma_Infos();
+
+      const {
+        0: item
+      } = pumaInfo;
 
       Puma_Infos.update(
         {
@@ -84,15 +88,18 @@ module.exports = {
         },
         {
           where: {
-            infoId: pumaInfo.infoId,
+            infoId: item.infoId,
           },
         }
       )
         .then(async (response) => {
-          await update_topics(topics);
-          await update_sections(sections);
-          await update_more_info(moreInfos);
-          await update_idealizers(teachers);
+          await module.exports.update_topics(topics);
+
+          const sectionsArray = topics.map(topic => topic.sections)
+          await module.exports.update_sections(sectionsArray);
+
+          await module.exports.update_more_info(moreInfos);
+          await module.exports.update_idealizers(teachers);
         
           resolve(response);
         })
@@ -102,86 +109,109 @@ module.exports = {
     }),
 
   update_more_info: async (moreInfos) => {
-    for (const moreInfo of moreInfos) {
-      if (moreInfo.moreInfoId) {
-        await More_info.create({
-          title: moreInfo.title,
-          description: moreInfo.description,
-        });
-      } else {
-        await More_info.update(
-          {
-            title: moreInfo.section.title,
-            description: moreInfo.section.description,
-          },
-          {
-            where: {
-              moreInfoId: moreInfo.moreInfoId,
-            },
+    const ids = moreInfos.map(item => item.moreInfoId)
+    if (moreInfos) {
+      for (const moreInfo of moreInfos) {
+        if (!ids.includes(moreInfo.moreInfoId)) {
+          await More_info.create({
+            title: moreInfo.title,
+            description: moreInfo.description,
+          });
+        } else {
+          try {
+            await More_info.update(
+              {
+                infoId: moreInfo.infoId,
+                title: moreInfo.title,
+                description: moreInfo.description,
+              },
+              {
+                where: {
+                  moreInfoId: moreInfo.moreInfoId,
+                },
+              }
+            );
           }
-        );
+          catch(e) {
+            console.log(e)
+          }
+        }
       }
     }
   },
 
   update_sections: async (sections) => {
-    for (const section of sections) {
-      if (!section.sectionId) {
-        await Section.create({
-          title: section.title,
-          description: section.description,
-        });
-      } else {
-        await Section.update(
-          {
-            title: section.title,
-            description: section.description,
-          },
-          {
-            where: {
-              sectionId: section.sectionId,
-            },
+    const ids = []
+    sections.forEach(element => {
+      element.forEach(item => {
+        ids.push(item.sectionId)
+      })
+    });
+    if (sections) {
+      for (const section of sections) {
+        for (const item of section) {
+          if (!ids.includes(item.sectionId)) {
+            await Section.create({
+              title: item.title,
+              description: item.description,
+            });
+          } else {
+            await Section.update(
+              {
+                title: item.title,
+                description: item.description,
+              },
+              {
+                where: {
+                  sectionId: item.sectionId,
+                },
+              }
+            );
           }
-        );
+        } 
       }
     }
   },
 
   update_topics: async (topics) => {
-    for (const topic of topics) {
-      if (!topic.topicId) {
-        await Topics.create({
-          title: topic.title,
-          description: topic.description,
-        });
-      } else {
-        await Topics.update(
-          {
-            title: topic.title,
-            description: topic.description,
-          },
-          {
-            where: {
-              topicId: topic.topicId,
+    if (topics){
+      for (const topic of topics) {
+        if (!topic.topic.topicId) {
+          await Topics.create({
+            title: topic.topic.title,
+            description: topic.topic.description,
+          });
+        } else {
+          await Topics.update(
+            {
+              title: topic.topic.title,
+              description: topic.topic.description,
             },
-          }
-        );
+            {
+              where: {
+                topicId: topic.topic.topicId,
+              },
+            }
+          );
+        }
       }
     }
   },
 
   update_idealizers: async (teachers) => {
-    for(const teacher of teachers){
-      await Teacher.update(
-        {
-          isIdealizer: teacher.isIdealizer
-        },
-        {
-          where: {
-            userId: teacher.userId
+    if (teachers) {
+      for(const teacher of teachers){
+        await Teacher.update(
+          {
+            isIdealizer: teacher.isIdealizer
+          },
+          {
+            where: {
+              userId: teacher.userId
+            }
           }
-        }
-      )
+        )
+      }
     }
   },
 };
