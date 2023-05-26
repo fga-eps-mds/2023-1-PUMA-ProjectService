@@ -40,7 +40,7 @@ module.exports = {
   }),
 
   removeProfessorsofSubject: (input) => new Promise((resolve, reject) => {
-    const { subjectid } = input;
+    const { subjectId } = input;
     sequelize.query(
       `delete from "Lectures" lt \
       where lt."subjectId" in \
@@ -49,7 +49,7 @@ module.exports = {
         from "Subject" sb \
         inner join "Lectures" lt \
         on sb."subjectId" = lt."subjectId" \
-        where sb."subjectId" = ${subjectid} \
+        where sb."subjectId" = ${subjectId} \
       )`
     ).then((results) => {
       resolve(results);

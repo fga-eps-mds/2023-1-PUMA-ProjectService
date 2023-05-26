@@ -4,10 +4,11 @@ const Subject = require('../db/model/Subject');
 
 module.exports = {
   addSubject: (input) => new Promise((resolve, reject) => {
-    const { name, courseSyllabus } = input;
+    const { name, courseSyllabus, image } = input;
     Subject.create({
       name,
       courseSyllabus,
+      image,
     }).then((response) => {
       resolve(response);
     }).catch((e) => reject(e));
@@ -38,10 +39,11 @@ module.exports = {
   }),
 
   updateSubject: (input) => new Promise((resolve, reject) => {
-    const { subjectId, name, courseSyllabus } = input;
+    const { subjectId, name, courseSyllabus, image } = input;
     Subject.update({
       name,
       courseSyllabus,
+      image,
     }, {
       where: {
         subjectId,

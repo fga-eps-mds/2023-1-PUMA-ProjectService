@@ -20,6 +20,9 @@ const Subject = database.define('Subject', {
         allowNull: false,
         defaultValue: false
     },
+    image: {
+        type: DataTypes.TEXT,
+    }
 }, {
     freezeTableName: true
 })

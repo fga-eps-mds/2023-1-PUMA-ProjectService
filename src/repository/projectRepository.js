@@ -12,12 +12,12 @@ module.exports = {
       if (user.operation === 'projetos') {
         results = sequelize.query(`SELECT p."projectId", p.name, p."expectedResult", p.status, p."createdAt", s.name AS "Subject", cu."fullName" FROM "Project" p LEFT JOIN "Subject" s on p."subjectId" = s."subjectId" LEFT JOIN "Common_User" cu on p."userId" = cu."userId" WHERE not(p.deleted) ORDER BY p."projectId" DESC`);
       } else if (user.operation === 'projetos-disciplina') {
-        results = sequelize.query(`SELECT p."projectId", p.name, p."expectedResult", p.status, p."createdAt", s.name AS "Subject", cu."fullName" FROM "Project" p LEFT JOIN "Subject" s ON p."subjectId" = s."subjectId" LEFT JOIN "Common_User" cu ON p."userId" = cu."userId" WHERE not(p.deleted) and p."subjectId" IN (SELECT DISTINCT l."subjectId" FROM "Teacher" prof INNER JOIN "Lectures" l ON prof."regNumber" = l."regNumber" WHERE prof."userId" = ${user.userid}) ORDER BY p."projectId" DESC`);
+        results = sequelize.query(`SELECT p."projectId", p.name, p."expectedResult", p.status, p."createdAt", s.name AS "Subject", cu."fullName" FROM "Project" p LEFT JOIN "Subject" s ON p."subjectId" = s."subjectId" LEFT JOIN "Common_User" cu ON p."userId" = cu."userId" WHERE not(p.deleted) and p."subjectId" IN (SELECT DISTINCT l."subjectId" FROM "Teacher" prof INNER JOIN "Lectures" l ON prof."regNumber" = l."regNumber" WHERE prof."userId" = ${user.userId}) ORDER BY p."projectId" DESC`);
       } else {
-        results = sequelize.query(`SELECT p."projectId", p.name, p."expectedResult", p.status, p."createdAt", s.name AS "Subject", cu."fullName" FROM "Project" p LEFT JOIN "Subject" s on p."subjectId" = s."subjectId" LEFT JOIN "Common_User" cu on p."userId" = cu."userId" WHERE not(p.deleted) and p."userId" = ${user.userid} ORDER BY p."projectId" DESC`);
+        results = sequelize.query(`SELECT p."projectId", p.name, p."expectedResult", p.status, p."createdAt", s.name AS "Subject", cu."fullName" FROM "Project" p LEFT JOIN "Subject" s on p."subjectId" = s."subjectId" LEFT JOIN "Common_User" cu on p."userId" = cu."userId" WHERE not(p.deleted) and p."userId" = ${user.userId} ORDER BY p."projectId" DESC`);
       }
       results.then((response) => {
-        resolve(response);
+        resolve(response[0]);
       }).catch((response) => {
         reject(response);
       });

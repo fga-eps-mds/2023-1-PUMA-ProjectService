@@ -44,7 +44,7 @@ module.exports = {
   }),
 
   removeSubareasOfSubject: (input) => new Promise((resolve, reject) => {
-    const { subjectid } = input;
+    const { subjectId } = input;
     sequelize.query(
       `delete from "Identifies" id \
       where id."subjectId" in \
@@ -53,7 +53,7 @@ module.exports = {
         from "Subject" sb \
         inner join "Identifies" id \
         on sb."subjectId" = id."subjectId" \
-        where sb."subjectId" = ${subjectid} \
+        where sb."subjectId" = ${subjectId} \
       ) \
       `
     ).then((results) => {

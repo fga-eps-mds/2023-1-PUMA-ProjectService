@@ -192,7 +192,7 @@ module.exports = {
   }),
 
   removeKeywordsOfSubject: (input) => new Promise((resolve, reject) => {
-    const { subjectid } = input;
+    const { subjectId } = input;
     sequelize.query(
       `delete from "Summarize" sm \
       where sm."subjectId" in \
@@ -201,7 +201,7 @@ module.exports = {
         from "Subject" sb \
         inner join "Summarize" sm \
         on sb."subjectId" = sm."subjectId" \
-        where sb."subjectId" = ${subjectid} \
+        where sb."subjectId" = ${subjectId} \
       )`
     ).then((results) => {
       resolve(results);

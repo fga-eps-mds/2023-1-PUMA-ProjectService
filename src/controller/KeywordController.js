@@ -9,17 +9,6 @@ module.exports = {
     })
   },
 
-  getKeywords: () => {
-    return new Promise((resolve, reject) => {
-      try {
-        resolve(projectRepository.getKeywords());
-      } catch (e) {
-        reject(e);
-      }
-      resolve();
-    });
-  },
-
   addKeyword: (keyword) => {
     return new Promise((resolve, reject) => {
       try {
