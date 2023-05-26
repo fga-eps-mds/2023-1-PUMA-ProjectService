@@ -9,11 +9,11 @@ const Topics = database.define('Topics', {
         primaryKey: true,
     },
     title: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false
     },
     description: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false
     },
 }, {

@@ -20,11 +20,11 @@ const Section = database.define('Section', {
         },
     },
     title: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false
     },
     description: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false
     },
 }, {
