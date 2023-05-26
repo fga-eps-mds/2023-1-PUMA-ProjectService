@@ -17,6 +17,9 @@ const Teacher = database.define('Teacher', {
         type: DataTypes.STRING,
         allowNull: false,
         primaryKey: true
+    },
+    image: {
+        type: DataTypes.TEXT,
     }
 }, {
     freezeTableName: true
