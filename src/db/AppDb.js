@@ -23,7 +23,8 @@ if (process.env.ENVIRONMENT === 'hom') {
     dialect: appDbConfig.dialect,
     query: { raw: true },
   });
-  sequelize.query(script);
+  // populate pumaInfo
+  // sequelize.query(script);
 }
 
 module.exports = sequelize;

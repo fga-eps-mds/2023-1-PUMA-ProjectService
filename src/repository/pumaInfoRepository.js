@@ -71,7 +71,7 @@ module.exports = {
 
       // const pumaInfo = await module.exports.getPuma_Infos();
 
-      Puma_Infos.update(
+      await Puma_Infos.update(
         {
           description: pumaItem.description,
           goal: pumaItem.goal,
@@ -198,6 +198,7 @@ module.exports = {
   update_idealizers: async (teachers) => {
     if (teachers) {
       for(const teacher of teachers){
+        console.log(teacher);
         await Teacher.update(
           {
             isIdealizer: teacher.isIdealizer
