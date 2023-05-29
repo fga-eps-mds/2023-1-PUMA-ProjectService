@@ -16,7 +16,6 @@ if (process.env.ENVIRONMENT === 'hom') {
       },
     },
   });
-  sequelize.query(script);
 } else {
   sequelize = new Sequelize(appDbConfig.database, appDbConfig.username, appDbConfig.password, {
     host: appDbConfig.host,
