@@ -1,4 +1,5 @@
 /* eslint-disable no-restricted-syntax */
+/* eslint-disable*/
 /* eslint-disable no-async-promise-executor */
 /* eslint-disable no-use-before-define */
 const classRepository = require('../repository/ClassRepository');
