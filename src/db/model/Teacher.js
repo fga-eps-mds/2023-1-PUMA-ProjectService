@@ -23,6 +23,10 @@ const Teacher = database.define('Teacher', {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false
+    },
+    status: {
+        type: DataTypes.ENUM('PENDENTE', 'ACEITO', 'RECUSADO'),
+        defaultValue: 'PENDENTE',
     }
 }, {
     freezeTableName: true
