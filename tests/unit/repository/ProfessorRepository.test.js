@@ -79,7 +79,7 @@ describe('professorRepository', () => {
       return professorRepository.getProfessors()
         .then((results) => {
           expect(sequelize.query).toHaveBeenCalledWith(
-            'Select pf."regNumber", pf."userId", us."fullName", us.email, pf."image" from "Teacher" pf left join "Common_User" us on pf."userId" = us."userId";',
+            'Select pf."regNumber", pf."userId", us."fullName", us.email, us."image" from "Teacher" pf left join "Common_User" us on pf."userId" = us."userId";',
           );
 
           expect(results).toEqual(resultado);
@@ -115,7 +115,7 @@ describe('professorRepository', () => {
       return professorRepository.getProfessorsofSubject(input)
         .then((results) => {
           expect(sequelize.query).toHaveBeenCalledWith(
-            `select pf."regNumber", pf."userId", us."fullName", us.email, pf."image" from "Subject" sb \
+            `select pf."regNumber", pf."userId", us."fullName", us.email, us."image" from "Subject" sb \
       inner join "Lectures" lt on sb."subjectId" = lt."subjectId" \
       inner join "Teacher" pf on lt."regNumber" = pf."regNumber" \
       left join "Common_User" us on pf."userId" = us."userId" \
