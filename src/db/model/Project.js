@@ -64,6 +64,10 @@ const Project = database.define('Project', {
         allowNull: false,
         defaultValue: false
     },
+    projectImage:{
+        type: DataTypes.TEXT,
+        allowNull: true
+    },
 }, {
     freezeTableName: true,
 })
