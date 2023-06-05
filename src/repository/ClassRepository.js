@@ -1,3 +1,8 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable no-trailing-spaces */
+/* eslint-disable no-unused-vars */
+/* eslint-disable camelcase */
+/* eslint-disable indent */
 const db = require('../../dbconfig/dbConfig');
 const Classes = require('../db/model/Classes');
 const Classes_Teacher = require('../db/model/Classes_Teacher');
@@ -14,23 +19,23 @@ module.exports = {
     const { classid } = input;
     Classes.findAll({
       where: { 
-        classId: classid 
-      }
+        classId: classid, 
+      },
     })
       .then((responseClasses) => {
-        let res = {class: responseClasses[0], teachers: '', schedules: ''};
+        const res = { class: responseClasses[0], teachers: '', schedules: '' };
         Classes_Teacher.findAll({
           where: {
-            classId: classid
-          }
+            classId: classid,
+          },
         })
         .then((responseTeachers) => {
           res.teachers = responseTeachers;
 
           Classes_Schedule.findAll({
             where: {
-              classId: classid
-            }
+              classId: classid,
+            },
           })
             .then((responseSchedules) => {
               res.schedules = responseSchedules;
@@ -47,9 +52,11 @@ module.exports = {
   }),
 
   updateClass: (input) => new Promise((resolve, reject) => {
-    const { subjectId, classCode, year, semester, password, classid, userId, classesTeacher, classesSchedule } = input;
+    const {
+ subjectId, classCode, year, semester, password, classid, userId, classesTeacher, classesSchedule, 
+} = input;
 
-    if(classid === '0'){
+    if (classid === '0') {
       Classes.create({
         subjectId,
         classCode,
@@ -57,7 +64,7 @@ module.exports = {
         semester,
         password,
       }).then((response) => {
-        for(let i=0; i<classesTeacher.length; i++){
+        for (let i = 0; i < classesTeacher.length; i++) {
           Classes_Teacher.create({
             userId: classesTeacher[i],
             classId: response.classId,
@@ -65,7 +72,7 @@ module.exports = {
           }).catch((e) => reject(e));
         }
 
-        for(let i=0; i<classesSchedule.length; i++){
+        for (let i = 0; i < classesSchedule.length; i++) {
           Classes_Schedule.create({
             classId: response.classId,
             day: classesSchedule[i].day,
@@ -77,8 +84,7 @@ module.exports = {
 
         resolve(response[0]);
       }).catch((e) => reject(e));
-    }
-    else {
+    } else {
       Classes.update({
         subjectId,
         classCode,
@@ -88,15 +94,15 @@ module.exports = {
       }, {
         where: {
           classId: classid,
-        }
+        },
       })
         .then((response) => {
           Classes_Teacher.destroy({
             where: {
-              classId: classid
-            }
+              classId: classid,
+            },
           }).then(() => {
-            for(let i=0; i<classesTeacher.length; i++){
+            for (let i = 0; i < classesTeacher.length; i++) {
               Classes_Teacher.create({
                 userId: classesTeacher[i],
                 classId: classid,
@@ -110,9 +116,9 @@ module.exports = {
           Classes_Schedule.destroy({
             where: {
               classId: classid,
-            }
+            },
           }).then(() => {
-            for(let i=0; i<classesSchedule.length; i++){
+            for (let i = 0; i < classesSchedule.length; i++) {
               Classes_Schedule.create({
                 classId: classid,
                 day: classesSchedule[i].day,
@@ -138,7 +144,7 @@ module.exports = {
     }, {
       where: {
         classId: classid,
-      }
+      },
     }).then((response) => {
         resolve(response);
       }).catch((response) => {

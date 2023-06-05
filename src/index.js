@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 const express = require('express');
@@ -20,6 +21,10 @@ const Subject = require('./db/model/Subject');
 const Summarize = require('./db/model/Summarize');
 const Teacher = require('./db/model/Teacher');
 const Abstracts = require('./db/model/Abstracts');
+const Puma_Infos = require('./db/model/Puma_Infos');
+const Topics = require('./db/model/Topics');
+const Section = require('./db/model/Section');
+const More_Info = require('./db/model/More_Info');
 
 // const syncDb = require('./db/SyncDb');
 
@@ -49,6 +54,11 @@ const app = express();
     await Project.sync({ alter: true });
     await Summarize.sync({ alter: true });
     await Abstracts.sync({ alter: true });
+    await Puma_Infos.sync({ alter: true });
+    await Topics.sync({ alter: true });
+    await Section.sync({ alter: true });
+    await More_Info.sync({ alter: true });
+
     console.log('Database Inicializado')
   } catch (error) {
     console.log("Erro ao inicializar o banco ->", error);
