@@ -26,6 +26,7 @@ module.exports = {
           deleted: projectData.deleted,
           createdAt: projectData.createdAt,
           image: projectData.projectImage,
+          pdf: projectData.projectPdf,
         });
       } catch (error) {
         reject(error);
