@@ -79,15 +79,16 @@ module.exports = {
     })
   },
 
-  getProjects: () => new Promise(async (resolve, reject) => {
-    try {
-        const response = await projectRepository.getProjects();
+  getProjects: () => {
+    return new Promise((resolve, reject) => {
+      projectRepository.getProjects().then((response) => {
         resolve(response);
-    } catch (e) {
-        reject(e);
-    }
-  }),
-
+      }).catch((error) => {
+        reject(error);
+      });
+    });
+  },
+  
   evaluateProject: (payload) => {
     return new Promise((resolve, reject) => {
       projectRepository.evaluateProject(payload).then((response) => {
