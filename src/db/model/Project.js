@@ -12,7 +12,7 @@ const Project = database.define('Project', {
         allowNull: false,
         references: {
             model: {
-                tableName: "Common_User",
+                tableName: "User",
                 schema: "public",
             },
             key: "userId"

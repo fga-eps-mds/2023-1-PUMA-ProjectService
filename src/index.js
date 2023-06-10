@@ -9,7 +9,8 @@ const configRoutes = require('./routes/router');
 const Classes_Schedule = require('./db/model/Classes_Schedule');
 const Classes_Teacher = require('./db/model/Classes_Teacher');
 const Classes = require('./db/model/Classes');
-const Common_User = require('./db/model/Common_User');
+const User = require('./db/model/User');
+const User_Properties = require('./db/model/User_Properties');
 const Identifies = require('./db/model/Identifies');
 const Keyword = require('./db/model/Keyword');
 const Knowledge_Area = require('./db/model/Knowledge_Area');
@@ -19,7 +20,6 @@ const Semester = require('./db/model/Semester');
 const Subarea = require('./db/model/Subarea');
 const Subject = require('./db/model/Subject');
 const Summarize = require('./db/model/Summarize');
-const Teacher = require('./db/model/Teacher');
 const Abstracts = require('./db/model/Abstracts');
 const Puma_Infos = require('./db/model/Puma_Infos');
 const Topics = require('./db/model/Topics');
@@ -37,10 +37,10 @@ const app = express();
 
 (async () => {
   try {
-    await Common_User.sync({ alter: true });
+    await User.sync({ alter: true });
     await Subject.sync({ alter: true });
     await Knowledge_Area.sync({ alter: true });
-    await Teacher.sync({ alter: true });
+    await User_Properties.sync({ alter: true });
 
 
     await Classes.sync({ alter: true });
