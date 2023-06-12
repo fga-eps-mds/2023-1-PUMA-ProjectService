@@ -3,6 +3,21 @@ const db = require('../../dbconfig/dbConfig');
 const Partners = require('../db/model/Partners');
 
 module.exports = {
+  addPartner: (partner) => new Promise((resolve, reject) => {
+    const { name, cnpj, enterpriseLogo, socialReason } = partner;
+    Partners.create({
+      name,
+      cnpj,
+      enterpriseLogo,
+      socialReason,
+    }).then((response) => {
+      resolve(response);
+    }).catch((e) => {
+      console.log('Repository', e);
+      reject(e);
+    });
+  }),
+
   getPartners: () => new Promise((resolve, reject) => {
     Partners.findAll().then((response) => {
       resolve(response);
@@ -11,7 +26,7 @@ module.exports = {
 
   getPartner: (input) => new Promise((resolve, reject) => {
     const { partnerId } = input;
-    Classes.findAll({
+    Partners.findAll({
       where: { 
         partnerId: partnerId, 
       },

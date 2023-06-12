@@ -5,7 +5,9 @@ const database = require('../AppDb');
 const Partners = database.define('Partners', {
     partnerId: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        allowNull: true,
     },
     name: {
         type: DataTypes.STRING,

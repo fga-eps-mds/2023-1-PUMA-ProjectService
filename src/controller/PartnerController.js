@@ -2,6 +2,19 @@
 const partnerRepository = require('../repository/partnerRepository');
 
 module.exports = {
+    addPartner: (partner) => {
+        return new Promise((resolve, reject) => {
+            console.log(partner);
+          try {
+            resolve(partnerRepository.addPartner(partner));
+          } catch (e) {
+            console.log(e);
+            reject(e);
+          }
+          resolve();
+        });
+      },
+
     getPartners: () => new Promise(async (resolve, reject) => {
         try {
             const response = await partnerRepository.getPartners();

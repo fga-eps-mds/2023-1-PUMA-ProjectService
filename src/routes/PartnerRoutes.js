@@ -3,7 +3,13 @@ const express = require('express');
 const routes = express.Router();
 const partnerController = require('../controller/PartnerController');
 
-routes.get('/', (req, res) => {
+routes.post('/partners', (req, res) => {
+  partnerController.addPartner(req.body).then((response) => {
+    res.status(200).json(response);
+  });
+});
+
+routes.get('/partners', (req, res) => {
   partnerController.getPartners().then((response) => {
     res.status(200).json(response);
   });
