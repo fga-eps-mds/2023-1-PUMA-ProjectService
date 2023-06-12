@@ -34,7 +34,8 @@ const User_Properties = database.define('User_Properties', {
   },
   regNumber: {
     type: DataTypes.STRING,
-    primaryKey: true
+    primaryKey: true,
+    unique: true
   },
   softSkills: {
     type: DataTypes.STRING

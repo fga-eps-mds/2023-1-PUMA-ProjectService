@@ -7,6 +7,16 @@ const User = database.define('User', {
         autoIncrement: true,
         primaryKey: true,
     },
+    userTypeId: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: {
+            tableName: "User_Type",
+            schema: "public",
+          },
+          key: "userTypeId"
+        },
+    },
     email: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -28,6 +38,10 @@ const User = database.define('User', {
     phoneNumber: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    type: {
+        type: DataTypes.ENUM('Pessoa Fisica', 'Pessoa Juridica', 'Aluno', 'Professor'),
+        defaultValue: 'Pessoa Fisica',
     },
 }, {
     freezeTableName: true

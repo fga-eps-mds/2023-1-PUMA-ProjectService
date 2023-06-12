@@ -25,6 +25,7 @@ const Puma_Infos = require('./db/model/Puma_Infos');
 const Topics = require('./db/model/Topics');
 const Section = require('./db/model/Section');
 const More_Info = require('./db/model/More_Info');
+const User_Type = require('./db/model/User_Type');
 
 // const syncDb = require('./db/SyncDb');
 
@@ -37,6 +38,7 @@ const app = express();
 
 (async () => {
   try {
+    await User_Type.sync({ alter: true });
     await User.sync({ alter: true });
     await Subject.sync({ alter: true });
     await Knowledge_Area.sync({ alter: true });
