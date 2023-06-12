@@ -39,10 +39,6 @@ const User = database.define('User', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    type: {
-        type: DataTypes.ENUM('Pessoa Fisica', 'Pessoa Juridica', 'Aluno', 'Professor'),
-        defaultValue: 'Pessoa Fisica',
-    },
 }, {
     freezeTableName: true
 })
