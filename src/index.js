@@ -25,6 +25,7 @@ const Puma_Infos = require('./db/model/Puma_Infos');
 const Topics = require('./db/model/Topics');
 const Section = require('./db/model/Section');
 const More_Info = require('./db/model/More_Info');
+const Banner = require('./db/model/Banner');
 
 // const syncDb = require('./db/SyncDb');
 
@@ -58,6 +59,7 @@ const app = express();
     await Topics.sync({ alter: true });
     await Section.sync({ alter: true });
     await More_Info.sync({ alter: true });
+    await Banner.sync({ alter: true });
 
     console.log('Database Inicializado')
   } catch (error) {
