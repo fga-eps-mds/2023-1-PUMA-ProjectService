@@ -29,6 +29,11 @@ const Banner = database.define('Banner', {
       type: DataTypes.BLOB,
       allowNull: true
     },
+    deleted: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+  },
 }, {
     freezeTableName: true
 })
