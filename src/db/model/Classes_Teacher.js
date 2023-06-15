@@ -13,7 +13,7 @@ const Classes_Teacher = database.define('Classes_Teacher', {
         allowNull: false,
         references: {
             model: {
-                tableName: "Common_User",
+                tableName: "User",
                 schema: "public",
             },
             key: "userId"
