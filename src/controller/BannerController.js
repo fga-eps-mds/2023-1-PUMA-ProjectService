@@ -2,17 +2,18 @@ const bannerRepository = require("../repository/bannerRepository");
 
 module.exports = {
     getHighlightBanner: () => {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const response = await bannerRepository.getHighlightBanner();
-                resolve(response);
-            } catch (e) {
-                console.log(e);
-                reject(e);
-            }
-            resolve();
+        return new Promise((resolve, reject) => {
+            bannerRepository.getHighlightBanner()
+                .then((response) => {
+                    resolve(response);
+                })
+                .catch((e) => {
+                    console.log(e);
+                    reject(e);
+                });
         });
     },
+
 
     addBanner: (banner) => {
         return new Promise((resolve, reject) => {
