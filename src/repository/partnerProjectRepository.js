@@ -51,23 +51,6 @@ module.exports = {
     });
   },
 
-  addProject: (project) => {
-    return new Promise((resolve, reject) => {
-      PartnerProject.create({
-        title: project.title,
-        expectedResult: project.expectedResult,
-        problem: project.problem,
-        objectives: project.objectives,
-        projectImages: project.projectImages,
-        projectPdf: project.projectPdf,
-      }).then((response) => {
-        resolve(response);
-      }).catch((error) => {
-        reject(error);
-      });
-    });
-  },
-
   updateProject: (id, project) => {
     return new Promise((resolve, reject) => {
       PartnerProject.update({
@@ -78,68 +61,15 @@ module.exports = {
         projectImages: project.projectImages,
         projectPdf: project.projectPdf,
       },
-      {
-        where: {
-          projectId: id
-        }
-      }).then((response) => {
-        resolve(response);
-      }).catch((error) => {
-        reject(error);
-      });
+        {
+          where: {
+            projectId: id
+          }
+        }).then((response) => {
+          resolve(response);
+        }).catch((error) => {
+          reject(error);
+        });
     });
   },
-
-  // updateProject: (project) => {
-  //   return new Promise(async (resolve, reject) => {
-  //     const projectId = project.projectid;
-  //     const subjectId = project.subjectid;
-
-  //     const name = project.name;
-  //     const expectedResult = project.expectedResult;
-  //     const feedback = project.feedback;
-  //     const problem = project.problem; 
-  //     const status = project.status;
-  //     const image = project.projectImage; 
-  //     const pdf = project.projectPdf; 
-  //     Project.update({
-  //       subjectId,
-  //       name,
-  //       expectedResult,
-  //       feedback,
-  //       problem,
-  //       status,
-  //       image,
-  //       pdf,
-  //     }, {
-  //       where: {
-  //         projectId,
-  //       },
-  //       returning: true,
-  //     }).then((response) => {
-  //         resolve(response[1][0]);
-  //       }).catch((error) => {
-  //         reject(error);
-  //       });
-  //   });
-  // },
-
-
-
-  // deleteProject: (projectId) => {
-  //   return new Promise((resolve, reject) => {
-  //     Project.update({
-  //       deleted: true,
-  //     }, {
-  //       where: {
-  //         projectId,
-  //       }
-  //     }).then(() => {
-  //       resolve({ status: 'OK' });
-  //     }).catch((error) => {
-  //       reject(error);
-  //     });
-  //   });
-  // },
-
 }

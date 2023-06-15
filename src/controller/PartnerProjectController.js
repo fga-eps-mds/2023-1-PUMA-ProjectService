@@ -5,16 +5,14 @@ const keywordRepository = require('../repository/keywordRepository');
 const { response } = require('express');
 
 module.exports = {
-  addProject: (project) => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const response = await partnerProjectRepository.addProject(project);
-        resolve(response);
-      } catch (error) {
-        console.log(error)
-        reject(error);
-      }
-    });
+  addProject: async (project) => {
+    try {
+      const response = await partnerProjectRepository.addProject(project);
+      return response;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   },
 
   getProject: (id) => {
@@ -56,12 +54,4 @@ module.exports = {
       });
     });
   },
-
-  // deleteProject: (projectId) => {
-  //   return new Promise((resolve, reject) => {
-  //     projectRepository.deleteProject(projectId).then((response) => {
-  //       resolve(response);
-  //     }).catch((error) => { reject(error) });
-  //   });
-  // },
 };
