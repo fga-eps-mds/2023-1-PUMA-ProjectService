@@ -29,6 +29,9 @@ const Common_User = database.define('Common_User', {
         type: DataTypes.STRING,
         allowNull: false
     },
+    image: {
+        type: DataTypes.TEXT,
+    }
 }, {
     freezeTableName: true
 })
