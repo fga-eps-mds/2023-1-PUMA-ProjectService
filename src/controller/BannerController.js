@@ -28,51 +28,54 @@ module.exports = {
     },
 
     getAllBanners: () =>
-        new Promise(async (resolve, reject) => {
-            try {
-                const response = await bannerRepository.getAllBanners();
-                resolve(response);
-            } catch (e) {
-                console.log(e);
-                reject(e);
-            }
+        new Promise((resolve, reject) => {
+            bannerRepository.getAllBanners()
+                .then((response) => {
+                    resolve(response);
+                })
+                .catch((e) => {
+                    console.log(e);
+                    reject(e);
+                });
         }),
 
     deleteBanner: (bannerId) =>
-        new Promise(async (resolve, reject) => {
-            try {
-                const response = await bannerRepository.deleteBanner(bannerId);
-                resolve(response);
-            } catch (e) {
-                console.log(e);
-                reject(e);
-            }
+        new Promise((resolve, reject) => {
+            bannerRepository.deleteBanner(bannerId)
+                .then((response) => {
+                    resolve(response);
+                })
+                .catch((e) => {
+                    console.log(e);
+                    reject(e);
+                });
         }),
 
     getBanner: (bannerId) =>
-        new Promise(async (resolve, reject) => {
-            try {
-                const bannerItem = await bannerRepository.getBanner(bannerId);
-
-                resolve({
-                    bannerItem,
+        new Promise((resolve, reject) => {
+            bannerRepository.getBanner(bannerId)
+                .then((bannerItem) => {
+                    resolve({
+                        bannerItem,
+                    });
+                })
+                .catch((e) => {
+                    console.log(e);
+                    reject(e);
                 });
-            } catch (e) {
-                console.log(e);
-                reject(e);
-            }
         }),
+
 
     updateBanner: (bannerId) =>
-        new Promise(async (resolve, reject) => {
-            try {
-                const bannerResponse = await bannerRepository.updateBanner(bannerId);
-                resolve({
-                    bannerItem: bannerResponse,
+        new Promise((resolve, reject) => {
+            bannerRepository.updateBanner(bannerId)
+                .then((bannerResponse) => {
+                    resolve({
+                        bannerItem: bannerResponse,
+                    });
+                })
+                .catch((e) => {
+                    reject(e);
                 });
-            } catch (e) {
-                reject(e);
-            }
         }),
-
 };
