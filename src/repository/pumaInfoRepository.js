@@ -19,7 +19,11 @@ module.exports = {
         const pumaInfos = await Puma_Infos.findAll()
         const topicos = await Topics.findAll()
         const moreInfos = await More_info.findAll()
-        const teachers = await User_Properties.findAll();
+        const teachers = await User_Properties.findAll({
+          where: {
+            statusTeacher: 'ACEITO',
+          }
+        });
 
         const teachersResponse = []
 
