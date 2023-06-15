@@ -1,6 +1,5 @@
 const { DataTypes } = require('sequelize');
 const database = require('../AppDb');
-const sequelize = require('sequelize');
 
 const PartnerProject = database.define('PartnerProject', {
     projectId: {

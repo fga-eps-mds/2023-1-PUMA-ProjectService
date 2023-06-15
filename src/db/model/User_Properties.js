@@ -50,15 +50,15 @@ const User_Properties = database.define('User_Properties', {
   },
   departament: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: true
   },
   course: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
   },
   university: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
   },
 }, {
   freezeTableName: true
