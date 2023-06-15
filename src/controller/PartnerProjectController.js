@@ -17,6 +17,36 @@ module.exports = {
     });
   },
 
+  getProject: (id) => {
+    return new Promise((resolve, reject) => {
+      partnerProjectRepository.getProject(id).then((response) => {
+        resolve(response);
+      }).catch((error) => {
+        reject(error);
+      });
+    });
+  },
+
+  updateProject: (id, data) => {
+    return new Promise((resolve, reject) => {
+      partnerProjectRepository.updateProject(id, data).then((response) => {
+        resolve(response);
+      }).catch((error) => {
+        reject(error);
+      });
+    });
+  },
+
+  deleteProject: (id) => {
+    return new Promise((resolve, reject) => {
+      partnerProjectRepository.deleteProject(id).then((response) => {
+        resolve(response);
+      }).catch((error) => {
+        reject(error);
+      });
+    });
+  },
+
   getProjects: () => {
     return new Promise((resolve, reject) => {
       partnerProjectRepository.getProjects().then((response) => {
