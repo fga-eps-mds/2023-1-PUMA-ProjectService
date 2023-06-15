@@ -23,17 +23,16 @@ const Banner = database.define('Banner', {
     },
     bannerImage:{
       type: DataTypes.TEXT,
+      allowNull: false
+    },
+    bannerLink: {
+      type: DataTypes.TEXT,
       allowNull: true
     },
-    bannerPdf: {
-      type: DataTypes.BLOB,
+    buttonLabel: {
+      type: DataTypes.TEXT,
       allowNull: true
-    },
-    deleted: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
-  },
+    }
 }, {
     freezeTableName: true
 })

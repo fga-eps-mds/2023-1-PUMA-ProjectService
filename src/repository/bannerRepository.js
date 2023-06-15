@@ -5,14 +5,23 @@ const Banner = require("../db/model/Banner");
 module.exports = {
   addBanner: (banner) =>
     new Promise((resolve, reject) => {
-      const { title, description, isEmphasis, bannerImage, bannerPdf } =
+      const { title, description, isEmphasis, bannerImage, bannerLink, buttonLabel } =
         banner;
+      if (isEmphasis) {
+        Banner.update({
+          isEmphasis: false,
+        }, { where: {
+          isEmphasis: true,
+        }});
+      }
+      console.log(banner);
       Banner.create({
         title,
         description,
         isEmphasis,
         bannerImage,
-        bannerPdf,
+        bannerLink,
+        buttonLabel,
       })
         .then((response) => {
           resolve(response);
@@ -22,6 +31,7 @@ module.exports = {
           reject(e);
         });
     }),
+
   getAllBanners: () =>
     new Promise((resolve, reject) => {
       Banner.findAll()
@@ -39,6 +49,23 @@ module.exports = {
         },
       })
         .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  },
+
+  getHighlightBanner: () => {
+    return new Promise((resolve, reject) => {
+      Banner.findOne({
+        where: {
+          isEmphasis: true,
+        }
+      })
+        .then((response) => {
+          console.log(response);
           resolve(response);
         })
         .catch((error) => {
@@ -77,16 +104,11 @@ module.exports = {
 
   deleteBanner: (bannerId) =>
     new Promise((resolve, reject) => {
-      Banner.update(
-        {
-          deleted: true,
+      Banner.destroy({
+        where: {
+          bannerId,
         },
-        {
-          where: {
-            bannerId: bannerId,
-          },
-        }
-      )
+      })
         .then((response) => {
           resolve(response);
         })

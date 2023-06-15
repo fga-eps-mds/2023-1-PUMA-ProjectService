@@ -9,6 +9,12 @@ routes.get('/banner', (req, res) => {
   });
 });
 
+routes.get('/banner/highlight', (req, res) => {
+  bannerController.getHighlightBanner().then((response) => {
+    res.status(200).json(response);
+  });
+});
+
 routes.post('/banner', (req, res) => {
   bannerController.addBanner(req.body).then((response) => {
     res.status(200).json(response);
