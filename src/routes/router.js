@@ -5,6 +5,7 @@ const keywordRoutes = require('./KeywordRoutes');
 const classRoutes = require('./ClassRoutes');
 const pumaInfoRoutes = require('./PumaInfoRoutes');
 const bannerRoutes = require('./BannerRoutes');
+const partnerProjectRoutes = require('./PartnerProjectsRoute');
 
 
 module.exports = (app) => {
@@ -15,5 +16,6 @@ module.exports = (app) => {
     classRoutes,
     pumaInfoRoutes,
     bannerRoutes,
+    partnerProjectRoutes,
   ]);
 };

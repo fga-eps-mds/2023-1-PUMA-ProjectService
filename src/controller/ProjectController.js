@@ -25,6 +25,8 @@ module.exports = {
           status: projectData.status,
           deleted: projectData.deleted,
           createdAt: projectData.createdAt,
+          image: projectData.projectImage,
+          pdf: projectData.projectPdf,
         });
       } catch (error) {
         reject(error);
@@ -77,6 +79,16 @@ module.exports = {
     })
   },
 
+  getProjects: () => {
+    return new Promise((resolve, reject) => {
+      projectRepository.getProjects().then((response) => {
+        resolve(response);
+      }).catch((error) => {
+        reject(error);
+      });
+    });
+  },
+  
   evaluateProject: (payload) => {
     return new Promise((resolve, reject) => {
       projectRepository.evaluateProject(payload).then((response) => {
