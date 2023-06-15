@@ -84,6 +84,15 @@ module.exports = {
         bannerImage,
         bannerPdf,
       } = input;
+
+      if (isEmphasis) {
+        Banner.update({
+          isEmphasis: false,
+        }, { where: {
+          isEmphasis: true,
+        }});
+      }
+
       Banner.update(
         {
           title,
