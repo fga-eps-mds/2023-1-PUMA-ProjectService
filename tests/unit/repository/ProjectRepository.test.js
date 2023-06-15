@@ -334,4 +334,25 @@ describe('Repository', () => {
       await expect(projectRepository.deleteProject(projectid)).rejects.toThrow(expectedError);
     });
   });
+
+  describe('getProjects', () => {
+    test('should get all projects in descending order', async () => {
+      const findAllSpy = jest.spyOn(Project, 'findAll').mockResolvedValue([{ projectId: 1 }, { projectId: 2 }]);
+  
+      const response = await projectRepository.getProjects();
+      expect(response).toBeDefined();
+      expect(findAllSpy).toHaveBeenCalledWith({ order: [['projectId', 'DESC']] });
+      expect(response.length).toEqual(2);
+      expect(response[0].projectId).toEqual(1);
+      expect(response[1].projectId).toEqual(2);
+    });
+  
+    test('should reject when getting all projects fails', async () => {
+      const findAllSpy = jest.spyOn(Project, 'findAll').mockRejectedValue(new Error('Failed to get all projects'));
+  
+      await expect(projectRepository.getProjects()).rejects.toThrowError('Failed to get all projects');
+      expect(findAllSpy).toHaveBeenCalledWith({ order: [['projectId', 'DESC']] });
+    });
+  });
+  
 });

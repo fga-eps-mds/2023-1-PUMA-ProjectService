@@ -64,6 +64,14 @@ const Project = database.define('Project', {
         allowNull: false,
         defaultValue: false
     },
+    projectImage:{
+        type: DataTypes.TEXT,
+        allowNull: true
+    },
+    projectPdf: {
+        type: DataTypes.BLOB,
+        allowNull: true
+    },
 }, {
     freezeTableName: true,
 })

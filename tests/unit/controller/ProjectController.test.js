@@ -264,4 +264,16 @@ describe('ProjectController', () => {
       expect(keywordRepository.getKeywordsAvailbleToProject).toHaveBeenCalled();
     });
   });
+
+  describe('getProjects', () => {
+    it('should return all projects', async () => {
+      const expectedProjects = [{ id: 1, name: 'Project 1', problem: 'Test' }, { id: 2, name: 'Project 2', problem: 'Test 2' }];
+      projectRepository.getProjects.mockResolvedValue(expectedProjects);
+
+      const result = await projectController.getProjects();
+
+      expect(projectRepository.getProjects).toHaveBeenCalledTimes(1);
+      expect(result).toEqual(expectedProjects);
+    });
+  });
 });

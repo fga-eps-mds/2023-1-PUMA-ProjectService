@@ -121,6 +121,8 @@ module.exports = {
         feedback: project.feedback,
         problem: project.problem,
         status: project.status,
+        image: project.projectImage,
+        pdf: project.projectPdf,
       }).then((response) => {
         resolve(response);
       }).catch((error) => {
@@ -133,14 +135,23 @@ module.exports = {
     return new Promise(async (resolve, reject) => {
       const projectId = project.projectid;
       const subjectId = project.subjectid;
+
       const name = project.name;
-      const expectedResult = project.expectedresult;
+      const expectedResult = project.expectedResult;
+      const feedback = project.feedback;
       const problem = project.problem; 
+      const status = project.status;
+      const image = project.projectImage; 
+      const pdf = project.projectPdf; 
       Project.update({
         subjectId,
         name,
         expectedResult,
+        feedback,
         problem,
+        status,
+        image,
+        pdf,
       }, {
         where: {
           projectId,
@@ -153,6 +164,14 @@ module.exports = {
         });
     });
   },
+
+  getProjects: () => new Promise((resolve, reject) => {
+    Project.findAll({
+      order: [['projectId', 'DESC']]
+    }).then((response) => {
+      resolve(response);
+    }).catch((e) => reject(e));
+  }),
 
   deleteProject: (projectId) => {
     return new Promise((resolve, reject) => {

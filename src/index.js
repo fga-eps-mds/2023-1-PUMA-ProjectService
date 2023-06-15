@@ -26,6 +26,7 @@ const Topics = require('./db/model/Topics');
 const Section = require('./db/model/Section');
 const More_Info = require('./db/model/More_Info');
 const User_Type = require('./db/model/User_Type');
+const PartnerProject = require('./db/model/PartnerProject');
 
 // const syncDb = require('./db/SyncDb');
 
@@ -57,6 +58,7 @@ const app = express();
     await Summarize.sync({ alter: true });
     await Abstracts.sync({ alter: true });
     await Puma_Infos.sync({ alter: true });
+    await PartnerProject.sync({ alter: true });
     await Topics.sync({ alter: true });
     await Section.sync({ alter: true });
     await More_Info.sync({ alter: true });
