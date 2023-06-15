@@ -14,23 +14,26 @@ describe('BannerController', () => {
         title: 'Test Project',
         description: 'Test Description',
         isEmphasis: false,
-        bannerPdf: 'Test pdf',
         bannerImage: 'Test image',
+        bannerLink: 'Test link',
+        buttonLabel: 'Test button'
       };
       const bannerData = {
         title: banner.title,
         description: banner.description,
         isEmphasis: banner.isEmphasis,
-        bannerPdf: banner.bannerPdf,
-        bannerImage: banner.bannerPdf,
+        bannerImage: banner.bannerImage,
+        bannerLink: banner.bannerLink,
+        buttonLabel: banner.buttonLabel,
         deleted: false,
       };
       const expectedResponse = {
         title: bannerData.title,
         description: bannerData.description,
         isEmphasis: bannerData.isEmphasis,
-        bannerPdf: bannerData.bannerPdf,
-        bannerImage: bannerData.bannerPdf,
+        bannerImage: bannerData.bannerImage,
+        bannerLink: bannerData.bannerLink,
+        buttonLabel: bannerData.buttonLabel,
         deleted: bannerData.deleted,
       };
       jest.spyOn(bannerRepository, 'addBanner').mockResolvedValueOnce(bannerData);
@@ -46,8 +49,9 @@ describe('BannerController', () => {
         title: 'Test Project',
         description: 'Test Description',
         isEmphasis: false,
-        bannerPdf: 'Test pdf',
         bannerImage: 'Test image',
+        bannerLink: 'Test link',
+        buttonLabel: 'Test button'
       };
       const error = new Error('Unable to add banner');
       jest.spyOn(bannerRepository, 'addBanner').mockRejectedValueOnce(error);
@@ -64,15 +68,17 @@ describe('BannerController', () => {
           title: 'Banner 1',
           description: 'Description 1',
           isEmphasis: false,
-          bannerPdf: 'banner1.pdf',
           bannerImage: 'banner1.png',
+          bannerLink: 'banner1 link',
+          buttonLabel: 'banner1 button'
         },
         {
           title: 'Banner 2',
           description: 'Description 2',
           isEmphasis: true,
-          bannerPdf: 'banner2.pdf',
           bannerImage: 'banner2.png',
+          bannerLink: 'banner2 link',
+          buttonLabel: 'banner2 button'
         },
       ];
       jest.spyOn(bannerRepository, 'getAllBanners').mockResolvedValueOnce(mockBanners);
@@ -121,8 +127,9 @@ describe('BannerController', () => {
         title: 'Test Banner',
         description: 'Test Description',
         isEmphasis: true,
-        bannerPdf: 'Test PDF',
         bannerImage: 'Test Image',
+        bannerLink: 'Test link',
+        buttonLabel: 'Test button'
       };
       jest.spyOn(bannerRepository, 'getBanner').mockResolvedValueOnce(bannerItem);
 
@@ -150,8 +157,9 @@ describe('BannerController', () => {
         title: 'Updated Banner',
         description: 'Updated Description',
         isEmphasis: true,
-        bannerPdf: 'Updated PDF',
         bannerImage: 'Updated Image',
+        bannerLink: 'Test link',
+        buttonLabel: 'Test button'
       };
       jest.spyOn(bannerRepository, 'updateBanner').mockResolvedValueOnce(updatedBannerItem);
 
@@ -168,6 +176,33 @@ describe('BannerController', () => {
 
       await expect(bannerController.updateBanner(bannerId)).rejects.toThrow(errorMessage);
       expect(bannerRepository.updateBanner).toHaveBeenCalledWith(bannerId);
+    });
+  });
+
+  describe('getHighlightBanner', () => {
+    it('should retrieve the highlight banner', async () => {
+      const mockBanner = {
+        title: 'Highlight Banner',
+        description: 'This is the highlight banner',
+        isEmphasis: true,
+        bannerImage: 'highlight.png',
+        bannerLink: 'highlight link',
+        buttonLabel: 'highlight button'
+      };
+      jest.spyOn(bannerRepository, 'getHighlightBanner').mockResolvedValueOnce(mockBanner);
+
+      const response = await bannerController.getHighlightBanner();
+
+      expect(response).toEqual(mockBanner);
+      expect(bannerRepository.getHighlightBanner).toHaveBeenCalled();
+    });
+
+    it('should reject with an error if retrieval fails', async () => {
+      const errorMessage = 'Failed to retrieve highlight banner';
+      jest.spyOn(bannerRepository, 'getHighlightBanner').mockRejectedValueOnce(new Error(errorMessage));
+
+      await expect(bannerController.getHighlightBanner()).rejects.toThrow(errorMessage);
+      expect(bannerRepository.getHighlightBanner).toHaveBeenCalled();
     });
   });
 

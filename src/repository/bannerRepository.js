@@ -10,11 +10,12 @@ module.exports = {
       if (isEmphasis) {
         Banner.update({
           isEmphasis: false,
-        }, { where: {
-          isEmphasis: true,
-        }});
+        }, {
+          where: {
+            isEmphasis: true,
+          }
+        });
       }
-      console.log(banner);
       Banner.create({
         title,
         description,
@@ -82,15 +83,16 @@ module.exports = {
         description,
         isEmphasis,
         bannerImage,
-        bannerPdf,
       } = input;
 
       if (isEmphasis) {
         Banner.update({
           isEmphasis: false,
-        }, { where: {
-          isEmphasis: true,
-        }});
+        }, {
+          where: {
+            isEmphasis: true,
+          }
+        });
       }
 
       Banner.update(
@@ -99,7 +101,6 @@ module.exports = {
           description,
           isEmphasis,
           bannerImage,
-          bannerPdf,
         }, {
         where: {
           bannerId,

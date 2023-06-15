@@ -25,7 +25,8 @@ describe('Repository', () => {
         description: 'Test Description',
         isEmphasis: true,
         bannerImage: 'test-image.jpg',
-        bannerPdf: 'test-pdf.pdf',
+        bannerLink: 'test link',
+        buttonLabel: 'test button'
       };
       const createdBanner = {
         id: 123,
@@ -45,7 +46,8 @@ describe('Repository', () => {
         description: 'Test Description',
         isEmphasis: true,
         bannerImage: 'test-image.jpg',
-        bannerPdf: 'test-pdf.pdf',
+        bannerLink: 'test link',
+        buttonLabel: 'test button'
       };
       const errorMessage = 'Failed to create banner';
       jest.spyOn(Banner, 'create').mockRejectedValueOnce(new Error(errorMessage));
@@ -100,101 +102,62 @@ describe('Repository', () => {
     });
   });
 
-  describe('updateBanner', () => {
-    it('should update the banner with the specified ID', async () => {
-      const input = {
-        bannerId: 1,
-        title: 'Updated Banner',
-        description: 'Updated Description',
-        isEmphasis: true,
-        bannerImage: 'Updated Image',
-        bannerPdf: 'Updated PDF',
-      };
-      const mockResponse = [1];
-      jest.spyOn(Banner, 'update').mockResolvedValueOnce(mockResponse);
-
-      const response = await bannerRepository.updateBanner(input);
-
-      expect(response).toEqual(mockResponse);
-      expect(Banner.update).toHaveBeenCalledWith(
-        {
-          title: input.title,
-          description: input.description,
-          isEmphasis: input.isEmphasis,
-          bannerImage: input.bannerImage,
-          bannerPdf: input.bannerPdf,
-        },
-        {
-          where: {
-            bannerId: input.bannerId,
-          },
-        }
-      );
-    });
-
-    it('should reject with an error if updating the banner fails', async () => {
-      const input = {
-        bannerId: 1,
-        title: 'Updated Banner',
-        description: 'Updated Description',
-        isEmphasis: true,
-        bannerImage: 'Updated Image',
-        bannerPdf: 'Updated PDF',
-      };
-      const errorMessage = 'Failed to update the banner';
-      jest.spyOn(Banner, 'update').mockRejectedValueOnce(new Error(errorMessage));
-
-      await expect(bannerRepository.updateBanner(input)).rejects.toThrow(errorMessage);
-      expect(Banner.update).toHaveBeenCalledWith(
-        {
-          title: input.title,
-          description: input.description,
-          isEmphasis: input.isEmphasis,
-          bannerImage: input.bannerImage,
-          bannerPdf: input.bannerPdf,
-        },
-        {
-          where: {
-            bannerId: input.bannerId,
-          },
-        }
-      );
-    });
-  });
-
   describe('deleteBanner', () => {
-    it('should mark the banner as deleted', async () => {
+    it('should delete the banner with the specified ID', async () => {
       const bannerId = 1;
-      const mockResponse = [1];
-      jest.spyOn(Banner, 'update').mockResolvedValueOnce(mockResponse);
+      const mockResponse = 1;
+      jest.spyOn(Banner, 'destroy').mockResolvedValueOnce(mockResponse);
 
       const response = await bannerRepository.deleteBanner(bannerId);
 
       expect(response).toEqual(mockResponse);
-      expect(Banner.update).toHaveBeenCalledWith(
-        { deleted: true },
-        {
-          where: {
-            bannerId: bannerId,
-          },
-        }
-      );
+      expect(Banner.destroy).toHaveBeenCalledWith({
+        where: {
+          bannerId: bannerId,
+        },
+      });
     });
 
-    it('should reject with an error if marking the banner as deleted fails', async () => {
+    it('should reject with an error if deleting the banner fails', async () => {
       const bannerId = 1;
-      const errorMessage = 'Failed to mark the banner as deleted';
-      jest.spyOn(Banner, 'update').mockRejectedValueOnce(new Error(errorMessage));
+      const errorMessage = 'Failed to delete the banner';
+      jest.spyOn(Banner, 'destroy').mockRejectedValueOnce(new Error(errorMessage));
 
       await expect(bannerRepository.deleteBanner(bannerId)).rejects.toThrow(errorMessage);
-      expect(Banner.update).toHaveBeenCalledWith(
-        { deleted: true },
-        {
-          where: {
-            bannerId: bannerId,
-          },
-        }
-      );
+      expect(Banner.destroy).toHaveBeenCalledWith({
+        where: {
+          bannerId: bannerId,
+        },
+      });
+    });
+  });
+
+
+  describe('getHighlightBanner', () => {
+    it('should return the highlighted banner', async () => {
+      const mockBanner = { id: 1, title: 'Highlighted Banner', description: 'Highlighted Description' };
+      jest.spyOn(Banner, 'findOne').mockResolvedValueOnce(mockBanner);
+
+      const response = await bannerRepository.getHighlightBanner();
+
+      expect(response).toEqual(mockBanner);
+      expect(Banner.findOne).toHaveBeenCalledWith({
+        where: {
+          isEmphasis: true,
+        },
+      });
+    });
+
+    it('should reject with an error if fetching the highlighted banner fails', async () => {
+      const errorMessage = 'Failed to fetch the highlighted banner';
+      jest.spyOn(Banner, 'findOne').mockRejectedValueOnce(new Error(errorMessage));
+
+      await expect(bannerRepository.getHighlightBanner()).rejects.toThrow(errorMessage);
+      expect(Banner.findOne).toHaveBeenCalledWith({
+        where: {
+          isEmphasis: true,
+        },
+      });
     });
   });
 });

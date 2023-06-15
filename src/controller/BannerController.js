@@ -2,7 +2,7 @@ const bannerRepository = require("../repository/bannerRepository");
 
 module.exports = {
     getHighlightBanner: () => {
-      return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             try {
                 const response = await bannerRepository.getHighlightBanner();
                 resolve(response);
@@ -15,12 +15,10 @@ module.exports = {
     },
 
     addBanner: (banner) => {
-        console.log(banner);
         return new Promise((resolve, reject) => {
             try {
                 resolve(bannerRepository.addBanner(banner));
             } catch (e) {
-                console.log(e);
                 reject(e);
             }
             resolve();
