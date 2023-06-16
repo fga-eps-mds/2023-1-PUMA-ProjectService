@@ -1,7 +1,7 @@
 const professorRepository = require('../../../src/repository/professorRepository');
 const Lectures = require('../../../src/db/model/Lectures');
-const Common_User = require('../../../src/db/model/Common_User');
-const Teacher = require('../../../src/db/model/Teacher');
+const User = require('../../../src/db/model/User');
+const User_Properties = require('../../../src/db/model/User_Properties');
 const Subject = require('../../../src/db/model/Subject');
 const sequelize = require('../../../src/db/AppDb');
 
@@ -15,13 +15,13 @@ jest.mock('../../../src/db/model/Lectures', () => {
   };
 });
 
-jest.mock('../../../src/db/model/Common_User', () => {
+jest.mock('../../../src/db/model/User', () => {
   return {
     create: jest.fn(),
   };
 });
 
-jest.mock('../../../src/db/model/Teacher', () => {
+jest.mock('../../../src/db/model/User_Properties', () => {
   return {
     create: jest.fn(),
   };
@@ -79,7 +79,7 @@ describe('professorRepository', () => {
       return professorRepository.getProfessors()
         .then((results) => {
           expect(sequelize.query).toHaveBeenCalledWith(
-            'Select pf."regNumber", pf."userId", us."fullName", us.email, us."image" from "Teacher" pf left join "Common_User" us on pf."userId" = us."userId";',
+            'Select pf."regNumber", pf."userId", us."fullName", us.email, us."image" from "User_Properties" pf left join "User" us on pf."userId" = us."userId";',
           );
 
           expect(results).toEqual(resultado);
@@ -117,8 +117,8 @@ describe('professorRepository', () => {
           expect(sequelize.query).toHaveBeenCalledWith(
             `select pf."regNumber", pf."userId", us."fullName", us.email, us."image" from "Subject" sb \
       inner join "Lectures" lt on sb."subjectId" = lt."subjectId" \
-      inner join "Teacher" pf on lt."regNumber" = pf."regNumber" \
-      left join "Common_User" us on pf."userId" = us."userId" \
+      inner join "User_Properties" pf on lt."regNumber" = pf."regNumber" \
+      left join "User" us on pf."userId" = us."userId" \
       where sb."subjectId" = ${input.subjectid}`
           );
 

@@ -7,7 +7,7 @@ const Lectures = database.define('Lectures', {
         allowNull: false,
         references: {
             model: {
-                tableName: "Teacher",
+                tableName: "User_Properties",
                 schema: "public",
             },
             key: "regNumber"

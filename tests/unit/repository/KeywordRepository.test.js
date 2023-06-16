@@ -236,7 +236,7 @@ describe('KeywordRepository', () => {
       const results = await keywordRepository.getKeywordsAlternative();
 
       expect(mockQuery).toHaveBeenCalledWith(
-        'SELECT k."keywordId", k.keyword, s.name as "subjectName", s."subjectId", array_agg(c."userId") FROM "Summarize" su JOIN "Subject" s ON su."subjectId" = s."subjectId" JOIN "Keyword" k ON su."keywordId" = k."keywordId" and k.deleted is not true inner join "Lectures" l on l."subjectId" = s."subjectId" inner join "Teacher" p on l."regNumber" = p."regNumber" inner join "Common_User" c on p."userId" = c."userId" GROUP BY k."keywordId", s.name,s."subjectId" ORDER BY k."keywordId";',
+        'SELECT k."keywordId", k.keyword, s.name as "subjectName", s."subjectId", array_agg(c."userId") FROM "Summarize" su JOIN "Subject" s ON su."subjectId" = s."subjectId" JOIN "Keyword" k ON su."keywordId" = k."keywordId" and k.deleted is not true inner join "Lectures" l on l."subjectId" = s."subjectId" inner join "User_Properties" p on l."regNumber" = p."regNumber" inner join "User" c on p."userId" = c."userId" GROUP BY k."keywordId", s.name,s."subjectId" ORDER BY k."keywordId";',
       );
       expect(results).toEqual(expectedResults);
     });

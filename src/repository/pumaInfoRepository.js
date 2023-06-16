@@ -7,8 +7,8 @@ const Puma_Infos = require("../db/model/Puma_Infos");
 const Topics = require("../db/model/Topics");
 const Section = require("../db/model/Section");
 const More_info = require("../db/model/More_Info");
-const Teacher = require("../db/model/Teacher");
-const Common_User = require("../db/model/Common_User");
+const User_Properties = require("../db/model/User_Properties");
+const User = require("../db/model/User");
 
 module.exports = {
   // Get all Puma infos
@@ -19,12 +19,16 @@ module.exports = {
         const pumaInfos = await Puma_Infos.findAll()
         const topicos = await Topics.findAll()
         const moreInfos = await More_info.findAll()
-        const teachers = await Teacher.findAll();
+        const teachers = await User_Properties.findAll({
+          where: {
+            statusTeacher: 'ACEITO',
+          }
+        });
 
         const teachersResponse = []
 
         for(const teacher of teachers) {
-          const teacherComplementaryInfos = await Common_User.findOne({
+          const teacherComplementaryInfos = await User.findOne({
             where: {
               userId: teacher.userId
             }
@@ -199,7 +203,7 @@ module.exports = {
     if (teachers) {
       for(const teacher of teachers){
         console.log(teacher);
-        await Teacher.update(
+        await User_Properties.update(
           {
             isIdealizer: teacher.isIdealizer
           },
