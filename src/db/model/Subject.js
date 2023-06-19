@@ -15,6 +15,9 @@ const Subject = database.define('Subject', {
     courseSyllabus: {
         type: DataTypes.STRING(10000)
     },
+    courseDescription: {
+        type: DataTypes.STRING(10000)
+    },
     deleted: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
