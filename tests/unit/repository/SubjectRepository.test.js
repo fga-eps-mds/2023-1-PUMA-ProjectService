@@ -16,6 +16,7 @@ describe('Repository', () => {
       const input = {
         name: 'Subject 1',
         courseSyllabus: 'Syllabus 1',
+        courseDescription: 'Description 1',
       };
 
       jest.spyOn(Subject, 'create').mockResolvedValue(input);
@@ -30,6 +31,7 @@ describe('Repository', () => {
       const input = {
         name: 'Subject 1',
         courseSyllabus: 'Syllabus 1',
+        courseDescription: 'Description 1',
       };
 
       const error = new Error('Subject creation failed');
@@ -43,8 +45,8 @@ describe('Repository', () => {
   describe('getSubjects', () => {
     it('should retrieve all subjects', async () => {
       const subjects = [
-        { id: 1, name: 'Subject 1', courseSyllabus: 'Syllabus 1' },
-        { id: 2, name: 'Subject 2', courseSyllabus: 'Syllabus 2' },
+        { id: 1, name: 'Subject 1', courseSyllabus: 'Syllabus 1', courseDescription: 'Description 1' },
+        { id: 2, name: 'Subject 2', courseSyllabus: 'Syllabus 2', courseDescription: 'Description 2' },
       ];
 
       jest.spyOn(Subject, 'findAll').mockResolvedValue(subjects);
@@ -119,6 +121,7 @@ describe('Repository', () => {
         subjectId: 1,
         name: 'Subject 1 Updated',
         courseSyllabus: 'Syllabus 1 Updated',
+        courseDescription: 'Description 1 Updated',
       };
       const response = [1];
 
@@ -130,6 +133,7 @@ describe('Repository', () => {
         {
           name: input.name,
           courseSyllabus: input.courseSyllabus,
+          courseDescription: input.courseDescription,
         },
         {
           where: {
