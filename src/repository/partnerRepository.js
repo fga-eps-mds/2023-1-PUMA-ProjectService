@@ -7,9 +7,11 @@ module.exports = {
     const { name, cnpj, enterpriseLogo, socialReason } = partner;
     Partners.create({
       name,
-      cnpj,
+      description,
       enterpriseLogo,
-      socialReason,
+      projectName,
+      projectDescription,
+      projectImages,
     }).then((response) => {
       resolve(response);
     }).catch((e) => {

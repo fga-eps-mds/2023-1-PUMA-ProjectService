@@ -13,7 +13,7 @@ const Partners = database.define('Partners', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    cnpj: {
+    description: {
         type: DataTypes.STRING,
         allowNull: false
     },
@@ -21,9 +21,17 @@ const Partners = database.define('Partners', {
         type: DataTypes.TEXT,
         allowNull: false,
     },
-    socialReason: {
+    projectName: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
+    },
+    projectDescription: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    projectImages: {
+        type: DataTypes.TEXT,
+        allowNull: false,
     },
 
 }, {
