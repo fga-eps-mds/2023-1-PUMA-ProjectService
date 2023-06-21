@@ -12,7 +12,7 @@ module.exports = {
       if (user.operation === 'projetos') {
         results = sequelize.query(`SELECT p."projectId", p.name, p."expectedResult", p.status, p."createdAt", s.name AS "Subject", u."fullName" FROM "Project" p LEFT JOIN "Subject" s on p."subjectId" = s."subjectId" LEFT JOIN "User" u on p."userId" = u."userId" WHERE not(p.deleted) ORDER BY p."projectId" DESC`);
       } else if (user.operation === 'projetos-disciplina') {
-        results = sequelize.query(`SELECT p."projectId", p.name, p."expectedResult", p.status, p."createdAt", s.name AS "Subject", u."fullName" FROM "Project" p LEFT JOIN "Subject" s ON p."subjectId" = s."subjectId" LEFT JOIN "User" u ON p."userId" = u."userId" WHERE not(p.deleted) and p."subjectId" IN (SELECT DISTINCT l."subjectId" FROM "User_Properties" up INNER JOIN "Lectures" l ON up."regNumber" = l."regNumber" WHERE up."userId" = ${user.userId}) ORDER BY p."projectId" DESC`);
+        results = sequelize.query(`SELECT p."projectId", p.name, p."expectedResult", p.status, p."createdAt", s.name AS "Subject", u."fullName" FROM "Project" p LEFT JOIN "Subject" s ON p."subjectId" = s."subjectId" LEFT JOIN "User" u ON p."userId" = u."userId" WHERE not(p.deleted) and p."subjectId" IN (SELECT DISTINCT l."subjectId" FROM "User_Properties" up INNER JOIN "Lectures" l ON up."userId" = l."userId" WHERE up."userId" = ${user.userId}) ORDER BY p."projectId" DESC`);
       } else {
         results = sequelize.query(`SELECT p."projectId", p.name, p."expectedResult", p.status, p."createdAt", s.name AS "Subject", u."fullName" FROM "Project" p LEFT JOIN "Subject" s on p."subjectId" = s."subjectId" LEFT JOIN "User" u on p."userId" = u."userId" WHERE not(p.deleted) and p."userId" = ${user.userId} ORDER BY p."projectId" DESC`);
       }

@@ -188,7 +188,7 @@ const subjectUtils = {
     addSubjectProfessorRelation: async (subject, professors) => {
         for await (const professor of professors) {
             await professorRepository.addProfessorSubjectRelation({
-                regnumber: professor.regNumber,
+                userId: professor.userId,
                 subjectid: subject.subjectId,
             });
         }

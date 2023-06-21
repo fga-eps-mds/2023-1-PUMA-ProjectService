@@ -69,7 +69,7 @@ describe('Repository', () => {
       const result = await projectRepository.getUserProposals(user);
 
       expect(result).toBe(expectedResult);
-      expect(sequelize.query).toHaveBeenCalledWith(`SELECT p."projectId", p.name, p."expectedResult", p.status, p."createdAt", s.name AS "Subject", u."fullName" FROM "Project" p LEFT JOIN "Subject" s ON p."subjectId" = s."subjectId" LEFT JOIN "User" u ON p."userId" = u."userId" WHERE not(p.deleted) and p."subjectId" IN (SELECT DISTINCT l."subjectId" FROM "User_Properties" up INNER JOIN "Lectures" l ON up."regNumber" = l."regNumber" WHERE up."userId" = 1) ORDER BY p."projectId" DESC`);
+      expect(sequelize.query).toHaveBeenCalledWith(`SELECT p."projectId", p.name, p."expectedResult", p.status, p."createdAt", s.name AS "Subject", u."fullName" FROM "Project" p LEFT JOIN "Subject" s ON p."subjectId" = s."subjectId" LEFT JOIN "User" u ON p."userId" = u."userId" WHERE not(p.deleted) and p."subjectId" IN (SELECT DISTINCT l."subjectId" FROM "User_Properties" up INNER JOIN "Lectures" l ON up."userId" = l."userId" WHERE up."userId" = 1) ORDER BY p."projectId" DESC`);
     });
 
     it('should resolve with response from sequelize.query when user.operation is not "projetos" or "projetos-disciplina"', async () => {
