@@ -5,9 +5,9 @@ const sequelize = require('../db/AppDb');
 
 module.exports = {
   addProfessorSubjectRelation: (input) => new Promise((resolve, reject) => {
-    const { regnumber, subjectid } = input;
+    const { userId, subjectid } = input;
     Lectures.create({
-      regNumber: regnumber,
+      userId: userId,
       subjectId: subjectid,
     }).then((response) => {
       resolve(response);
@@ -28,7 +28,7 @@ module.exports = {
     sequelize.query(
       `select pf."regNumber", pf."userId", us."fullName", us.email, us."image" from "Subject" sb \
       inner join "Lectures" lt on sb."subjectId" = lt."subjectId" \
-      inner join "User_Properties" pf on lt."regNumber" = pf."regNumber" \
+      inner join "User_Properties" pf on lt."userId" = pf."userId" \
       left join "User" us on pf."userId" = us."userId" \
       where sb."subjectId" = ${subjectid}`
     ).then((results) => {
