@@ -17,6 +17,16 @@ const User = database.define('User', {
           key: "userTypeId"
         },
     },
+    initialUserTypeId: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: {
+            tableName: "User_Type",
+            schema: "public",
+          },
+          key: "userTypeId"
+        },
+    },
     email: {
         type: DataTypes.STRING,
         allowNull: false,
