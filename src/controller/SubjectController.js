@@ -76,7 +76,7 @@ module.exports = {
             let professors = null;
             for(let i = 0; i < response.length; i++){
                 professors = await professorRepository.getProfessorsofSubject({subjectid: response[i].subjectId});
-                response[i]["professors"] = professors;
+                response[i]["professors"] = professors[0];
             }
             
             resolve(response);

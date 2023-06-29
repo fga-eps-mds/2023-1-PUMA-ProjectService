@@ -53,10 +53,10 @@ module.exports = {
 
   updateClass: (input) => new Promise((resolve, reject) => {
     const {
- subjectId, classCode, year, semester, password, classid, userId, classesTeacher, classesSchedule, 
-} = input;
+      subjectId, classCode, year, semester, password, classId, userId, classesTeacher, classesSchedule, 
+    } = input;
 
-    if (classid === '0') {
+    if (classId === '0') {
       Classes.create({
         subjectId,
         classCode,
@@ -67,7 +67,7 @@ module.exports = {
         for (let i = 0; i < classesTeacher.length; i++) {
           Classes_Teacher.create({
             userId: classesTeacher[i],
-            classId: response.classId,
+            classId: response.classid,
           }).then(() => {
           }).catch((e) => reject(e));
         }
