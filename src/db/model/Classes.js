@@ -19,6 +19,11 @@ const Classes = database.define('Classes', {
             key: "subjectId"
         },
     },
+    isPublic:{
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+    },
     classCode: {
         type: DataTypes.STRING,
         allowNull: false
