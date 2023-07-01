@@ -53,12 +53,13 @@ module.exports = {
 
   updateClass: (input) => new Promise((resolve, reject) => {
     const {
-      subjectId, classCode, year, semester, password, classId, userId, classesTeacher, classesSchedule, 
+      subjectId, isPublic, classCode, year, semester, password, classId, userId, classesTeacher, classesSchedule, 
     } = input;
 
     if (classId === '0') {
       Classes.create({
         subjectId,
+        isPublic,
         classCode,
         year,
         semester,
@@ -87,6 +88,7 @@ module.exports = {
     } else {
       Classes.update({
         subjectId,
+        isPublic,
         classCode,
         year,
         semester,
