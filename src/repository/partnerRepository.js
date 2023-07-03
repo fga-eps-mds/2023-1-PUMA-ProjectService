@@ -4,7 +4,7 @@ const Partners = require('../db/model/Partners');
 
 module.exports = {
   addPartner: (partner) => new Promise((resolve, reject) => {
-    const { name, cnpj, enterpriseLogo, socialReason } = partner;
+    const { name, description, enterpriseLogo, projectName, projectDescription, projectImages, showOnHome } = partner;
     Partners.create({
       name,
       description,
@@ -12,6 +12,7 @@ module.exports = {
       projectName,
       projectDescription,
       projectImages,
+      showOnHome: false,
     }).then((response) => {
       resolve(response);
     }).catch((e) => {
@@ -36,21 +37,27 @@ module.exports = {
   }),
 
   updatePartner: (input) => new Promise((resolve, reject) => {
-    const { partnerId, name, cnpj, enterpriseLogo, socialReason } = input;
+    const { partnerId, name, description, enterpriseLogo, projectName, projectDescription, projectImages, showOnHome } = input;
 
     if (partnerId === '0') {
       Partners.create({
         name,
-        cnpj,
+        description,
         enterpriseLogo,
-        socialReason,
+        projectName,
+        projectDescription,
+        projectImages,
+        showOnHome,
       })
     } else {
       Partners.update({
         name,
-        cnpj,
+        description,
         enterpriseLogo,
-        socialReason,
+        projectName,
+        projectDescription,
+        projectImages,
+        showOnHome,
       }, {
         where: {
           partnerId: partnerId,

@@ -33,6 +33,10 @@ const Partners = database.define('Partners', {
         type: DataTypes.TEXT,
         allowNull: false,
     },
+    showOnHome: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+    }
 
 }, {
     freezeTableName: true
