@@ -14,7 +14,7 @@ const Partners = database.define('Partners', {
         allowNull: false,
     },
     description: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false
     },
     enterpriseLogo: {
@@ -22,11 +22,11 @@ const Partners = database.define('Partners', {
         allowNull: false,
     },
     projectName: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false,
     },
     projectDescription: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false,
     },
     projectImages: {
