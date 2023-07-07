@@ -31,6 +31,11 @@ const PartnerProject = database.define('PartnerProject', {
         type: DataTypes.BLOB,
         allowNull: true
     },
+    isBestProject: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+    },
 }, {
     freezeTableName: true,
 })
