@@ -92,7 +92,7 @@ describe('ClassesRepository', () => {
         year: 2023,
         semester: 1,
         password: 'password',
-        classid: 123,
+        classId: 123,
         userId: 1,
         classesTeacher: [1, 2],
         classesSchedule: [
@@ -119,11 +119,11 @@ describe('ClassesRepository', () => {
           semester: input.semester,
           password: input.password,
         },
-        { where: { classId: input.classid } }
+        { where: { classId: input.classId } }
       );
-      expect(Classes_Teacher.destroy).toHaveBeenCalledWith({ where: { classId: input.classid } });
+      expect(Classes_Teacher.destroy).toHaveBeenCalledWith({ where: { classId: input.classId } });
       expect(Classes_Teacher.create).toHaveBeenCalledTimes(2);
-      expect(Classes_Schedule.destroy).toHaveBeenCalledWith({ where: { classId: input.classid } });
+      expect(Classes_Schedule.destroy).toHaveBeenCalledWith({ where: { classId: input.classId } });
       expect(Classes_Schedule.create).toHaveBeenCalledTimes(2);
     });
 
@@ -134,7 +134,7 @@ describe('ClassesRepository', () => {
         year: 2023,
         semester: 1,
         password: 'password',
-        classid: '0',
+        classId: '0',
         userId: 1,
         classesTeacher: [1, 2],
         classesSchedule: [
@@ -165,7 +165,7 @@ describe('ClassesRepository', () => {
         year: 2023,
         semester: 1,
         password: 'password',
-        classid: 123,
+        classId: 123,
         userId: 1,
         classesTeacher: [1, 2],
         classesSchedule: [
@@ -186,7 +186,7 @@ describe('ClassesRepository', () => {
           semester: input.semester,
           password: input.password,
         },
-        { where: { classId: input.classid } }
+        { where: { classId: input.classId } }
       );
       expect(Classes_Teacher.destroy).not.toHaveBeenCalled();
       expect(Classes_Teacher.create).not.toHaveBeenCalled();
