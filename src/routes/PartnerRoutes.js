@@ -24,7 +24,7 @@ routes.get('/partner/:partnerId', (req, res) => {
 });
 
 routes.put('/partner/:partnerId', (req, res) => {
-  partnerController.updatePartner(req.body).then((response) => {
+  partnerController.updatePartner(req.body, parseInt(req.params.partnerId, 10)).then((response) => {
     res.status(200).json(response);
   }).catch((response) => {
     res.status(400).json(response);

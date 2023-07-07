@@ -29,27 +29,18 @@ module.exports = {
 
   getPartner: (input) => new Promise((resolve, reject) => {
     const { partnerId } = input;
-    Partners.findAll({
+    Partners.findOne({
       where: { 
         partnerId: partnerId, 
       },
-    })
+    }).then((response) => {
+      resolve(response);
+    }).catch((e) => reject(e));
   }),
 
   updatePartner: (input) => new Promise((resolve, reject) => {
     const { partnerId, name, description, enterpriseLogo, projectName, projectDescription, projectImages, showOnHome } = input;
-
-    if (partnerId === '0') {
-      Partners.create({
-        name,
-        description,
-        enterpriseLogo,
-        projectName,
-        projectDescription,
-        projectImages,
-        showOnHome,
-      })
-    } else {
+    console.log
       Partners.update({
         name,
         description,
@@ -62,8 +53,13 @@ module.exports = {
         where: {
           partnerId: partnerId,
         },
-      })
-    }
+      }).then((response) => {
+        resolve(Partners.findOne({
+          where: {
+            partnerId: partnerId
+          }
+        }));
+      }).catch((e) => reject(e));
   }),
 
   deletePartner: (partnerId) => new Promise((resolve, reject) => {

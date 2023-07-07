@@ -40,26 +40,24 @@ module.exports = {
         try {
             const partnerItem = await partnerRepository.getPartner(partnerId);
 
-            resolve({
-                partnerItem
-            });
+            resolve(partnerItem);
         } catch (e) {
             console.log(e);
             reject(e);
         }
     }),
 
-    updatePartner: (partnerId) => new Promise(async (resolve, reject) => {
+    updatePartner: (input, partnerId) => new Promise(async (resolve, reject) => {
         try {
-            const {
-                partnerItem
-            } = partnerId;
-            const partnerResponse = await partnerRepository.updatePartner(partnerItem);
+            const obj = {
+                ...input,
+                partnerId: partnerId
+            }
+            const partnerResponse = await partnerRepository.updatePartner(obj);
 
-            resolve({
-                partnerItem: partnerResponse,
-            });
+            resolve(partnerResponse);
         } catch (e) {
+            console.log(e)
             reject(e);
         }
     }),
