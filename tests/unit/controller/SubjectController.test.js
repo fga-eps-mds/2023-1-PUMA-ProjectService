@@ -153,18 +153,39 @@ describe('subject controller', () => {
   });
 
   describe('getSubjects', () => {
-    it('should return a list of subjects with professors', async () => {
-      const mockResponse = [{ subjectId: 1 }, { subjectId: 2 }];
-      const mockProfessors = [{ professorId: 1 }, { professorId: 2 }];
-      subjectRepository.getSubjects.mockResolvedValue(mockResponse);
-      professorRepository.getProfessorsofSubject.mockResolvedValue(mockProfessors);
+    it('should return subjects with professors', async () => {
+      const subjects = [
+        { subjectId: 1 },
+        { subjectId: 2 },
+        { subjectId: 3 }
+      ];
+      subjectRepository.getSubjects.mockResolvedValue(subjects);
+
+      const professors = [
+        [
+          { regNumber: '123', userId: 1, fullName: 'Teste', email: 'teste@example.com', image: 'image.png' }
+        ],
+        [
+          { regNumber: '456', userId: 2, fullName: 'Teste2', email: 'teste2@example.com', image: 'image.png' }
+        ],
+        [
+          { regNumber: '789', userId: 3, fullName: 'Teste3', email: 'teste3@example.com', image: 'image.png' }
+        ]
+      ];
+      professorRepository.getProfessorsofSubject.mockImplementation(async (input) => {
+        const { subjectid } = input;
+        const professorsForSubject = professors[subjectid - 1];
+        return professorsForSubject;
+      });
 
       const result = await subjectController.getSubjects();
 
-      expect(result).toEqual([
-        { subjectId: 1, professors: mockProfessors },
-        { subjectId: 2, professors: mockProfessors },
-      ]);
+      expect(subjectRepository.getSubjects).toHaveBeenCalledTimes(1);
+      expect(professorRepository.getProfessorsofSubject).toHaveBeenCalledTimes(subjects.length);
+
+      result.forEach((subject, index) => {
+        expect([subject.professors]).toEqual(professors[index]);
+      });
     });
 
     it('should reject with an error if any repository call fails', async () => {
