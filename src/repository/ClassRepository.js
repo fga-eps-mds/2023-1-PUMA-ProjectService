@@ -18,8 +18,8 @@ module.exports = {
   getClass: (input) => new Promise((resolve, reject) => {
     const { classid } = input;
     Classes.findAll({
-      where: { 
-        classId: classid, 
+      where: {
+        classId: classid,
       },
     })
       .then((responseClasses) => {
@@ -29,23 +29,23 @@ module.exports = {
             classId: classid,
           },
         })
-        .then((responseTeachers) => {
-          res.teachers = responseTeachers;
+          .then((responseTeachers) => {
+            res.teachers = responseTeachers;
 
-          Classes_Schedule.findAll({
-            where: {
-              classId: classid,
-            },
-          })
-            .then((responseSchedules) => {
-              res.schedules = responseSchedules;
-              resolve(res);
-            }).catch((response) => {
-              reject(response);
-            });
-        }).catch((response) => {
-          reject(response);
-        });
+            Classes_Schedule.findAll({
+              where: {
+                classId: classid,
+              },
+            })
+              .then((responseSchedules) => {
+                res.schedules = responseSchedules;
+                resolve(res);
+              }).catch((response) => {
+                reject(response);
+              });
+          }).catch((response) => {
+            reject(response);
+          });
       }).catch((response) => {
         reject(response);
       });
@@ -53,7 +53,7 @@ module.exports = {
 
   updateClass: (input) => new Promise((resolve, reject) => {
     const {
-      subjectId, classCode, year, semester, password, classId, userId, classesTeacher, classesSchedule, 
+      subjectId, classCode, year, semester, password, classId, userId, classesTeacher, classesSchedule,
     } = input;
 
     if (classId === '0') {
@@ -67,7 +67,7 @@ module.exports = {
         for (let i = 0; i < classesTeacher.length; i++) {
           Classes_Teacher.create({
             userId: classesTeacher[i],
-            classId: response.classid,
+            classId: response.classId,
           }).then(() => {
           }).catch((e) => reject(e));
         }
@@ -93,19 +93,19 @@ module.exports = {
         password,
       }, {
         where: {
-          classId: classid,
+          classId: classId,
         },
       })
         .then((response) => {
           Classes_Teacher.destroy({
             where: {
-              classId: classid,
+              classId: classId,
             },
           }).then(() => {
             for (let i = 0; i < classesTeacher.length; i++) {
               Classes_Teacher.create({
                 userId: classesTeacher[i],
-                classId: classid,
+                classId: classId,
               }).then(() => {
               }).catch((e) => reject(e));
             }
@@ -115,12 +115,12 @@ module.exports = {
 
           Classes_Schedule.destroy({
             where: {
-              classId: classid,
+              classId: classId,
             },
           }).then(() => {
             for (let i = 0; i < classesSchedule.length; i++) {
               Classes_Schedule.create({
-                classId: classid,
+                classId: classId,
                 day: classesSchedule[i].day,
                 start: classesSchedule[i].start,
                 finish: classesSchedule[i].end,
@@ -131,7 +131,7 @@ module.exports = {
             reject(e);
           });
 
-        resolve(response);
+          resolve(response);
         }).catch((response) => {
           reject(response);
         });
@@ -146,9 +146,9 @@ module.exports = {
         classId: classid,
       },
     }).then((response) => {
-        resolve(response);
-      }).catch((response) => {
-        reject(response);
-      });
+      resolve(response);
+    }).catch((response) => {
+      reject(response);
+    });
   }),
 };
