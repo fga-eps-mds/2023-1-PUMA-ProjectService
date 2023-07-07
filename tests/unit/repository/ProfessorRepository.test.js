@@ -79,7 +79,7 @@ describe('professorRepository', () => {
       return professorRepository.getProfessors()
         .then((results) => {
           expect(sequelize.query).toHaveBeenCalledWith(
-            'Select pf."regNumber", pf."userId", us."fullName", us.email, us."image" from "User_Properties" pf left join "User" us on pf."userId" = us."userId";',
+            'Select pf."regNumber", pf."userId", us."fullName", us.email, us."image" from "User_Properties" pf left join "User" us on pf."userId" = us."userId" where pf."statusTeacher" = \'ACEITO\';',
           );
 
           expect(results).toEqual(resultado);
