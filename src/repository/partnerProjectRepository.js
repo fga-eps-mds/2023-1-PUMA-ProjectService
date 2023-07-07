@@ -36,6 +36,7 @@ module.exports = {
         objectives: project.objectives,
         projectImages: project.projectImages,
         projectPdf: project.projectPdf,
+        isBestProject: project.isBestProject,
       }).then((response) => {
         resolve(response);
       }).catch((error) => {
@@ -53,6 +54,7 @@ module.exports = {
         objectives: project.objectives,
         projectImages: project.projectImages,
         projectPdf: project.projectPdf,
+        isBestProject: project.isBestProject,
       },
         {
           where: {
