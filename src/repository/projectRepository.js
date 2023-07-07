@@ -123,7 +123,6 @@ module.exports = {
         status: project.status,
         image: project.projectImage,
         pdf: project.projectPdf,
-        isBestProject: project.isBestProject,
       }).then((response) => {
         resolve(response);
       }).catch((error) => {
@@ -144,7 +143,6 @@ module.exports = {
       const status = project.status;
       const image = project.projectImage; 
       const pdf = project.projectPdf; 
-      const isBestProject = project.isBestProject;
       Project.update({
         subjectId,
         name,
@@ -154,7 +152,6 @@ module.exports = {
         status,
         image,
         pdf,
-        isBestProject,
       }, {
         where: {
           projectId,
@@ -180,7 +177,6 @@ module.exports = {
     return new Promise((resolve, reject) => {
       Project.update({
         deleted: true,
-        isBestProject: false,
       }, {
         where: {
           projectId,
