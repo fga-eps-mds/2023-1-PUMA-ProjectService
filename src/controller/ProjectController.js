@@ -27,6 +27,7 @@ module.exports = {
           createdAt: projectData.createdAt,
           image: projectData.projectImage,
           pdf: projectData.projectPdf,
+          isBestProject: projectData.isBestProject,
         });
       } catch (error) {
         reject(error);
