@@ -27,8 +27,9 @@ module.exports = {
     }),
 
     deletePartner: (partnerId) => new Promise(async (resolve, reject) => {
+        console.log(partnerId)
         try {
-            const response = await partnerRepository.deletePartner(classId);
+            const response = await partnerRepository.deletePartner(partnerId);
             resolve(response);
         } catch (e) {
             console.log(e);

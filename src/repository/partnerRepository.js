@@ -63,9 +63,7 @@ module.exports = {
   }),
 
   deletePartner: (partnerId) => new Promise((resolve, reject) => {
-    Partners.update({
-      deleted: true,
-    }, {
+    Partners.destroy({
       where: {
         partnerId: partnerId,
       },

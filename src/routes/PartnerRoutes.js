@@ -32,7 +32,7 @@ routes.put('/partner/:partnerId', (req, res) => {
 });
 
 routes.delete('/partner/:partnerId', (req, res) => {
-  partnerController.getPartner(req.params.partnerId).then((response) => {
+  partnerController.deletePartner(req.params.partnerId).then((response) => {
     res.status(200).json(response.data);
   }).catch((error) => {
     res.status(400).json({ error });
