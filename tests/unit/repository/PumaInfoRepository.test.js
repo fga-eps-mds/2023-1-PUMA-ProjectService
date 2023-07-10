@@ -80,9 +80,14 @@ describe('repository', () => {
       expect(response).toBeUndefined();
       expect(Puma_Infos.update).toHaveBeenCalledWith(
         {
+          titleDescription: undefined,
           description: input.pumaItem.description,
+          titleGoal: undefined,
           goal: undefined,
+          titleMethodology: undefined,
           methodology: undefined,
+          titleTeachers: undefined,
+          descriptionImage: undefined,
           methodologyImage: undefined,
           goalImage: undefined,
         },
