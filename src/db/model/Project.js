@@ -12,7 +12,7 @@ const Project = database.define('Project', {
         allowNull: false,
         references: {
             model: {
-                tableName: "Common_User",
+                tableName: "User",
                 schema: "public",
             },
             key: "userId"
@@ -63,6 +63,14 @@ const Project = database.define('Project', {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false
+    },
+    projectImage:{
+        type: DataTypes.TEXT,
+        allowNull: true
+    },
+    projectPdf: {
+        type: DataTypes.BLOB,
+        allowNull: true
     },
 }, {
     freezeTableName: true,

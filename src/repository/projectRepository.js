@@ -1,7 +1,7 @@
 const db = require('../../dbconfig/dbConfig');
 const sequelize = require('../db/AppDb');
 const Project = require('../db/model/Project');
-const Common_User = require('../db/model/Common_User');
+const User = require('../db/model/User');
 const Summarize = require('../db/model/Summarize');
 const Abstracts = require('../db/model/Abstracts');
 
@@ -10,11 +10,11 @@ module.exports = {
     return new Promise((resolve, reject) => {
       let results = new Promise(() => { });
       if (user.operation === 'projetos') {
-        results = sequelize.query(`SELECT p."projectId", p.name, p."expectedResult", p.status, p."createdAt", s.name AS "Subject", cu."fullName" FROM "Project" p LEFT JOIN "Subject" s on p."subjectId" = s."subjectId" LEFT JOIN "Common_User" cu on p."userId" = cu."userId" WHERE not(p.deleted) ORDER BY p."projectId" DESC`);
+        results = sequelize.query(`SELECT p."projectId", p.name, p."expectedResult", p.status, p."createdAt", s.name AS "Subject", u."fullName" FROM "Project" p LEFT JOIN "Subject" s on p."subjectId" = s."subjectId" LEFT JOIN "User" u on p."userId" = u."userId" WHERE not(p.deleted) ORDER BY p."projectId" DESC`);
       } else if (user.operation === 'projetos-disciplina') {
-        results = sequelize.query(`SELECT p."projectId", p.name, p."expectedResult", p.status, p."createdAt", s.name AS "Subject", cu."fullName" FROM "Project" p LEFT JOIN "Subject" s ON p."subjectId" = s."subjectId" LEFT JOIN "Common_User" cu ON p."userId" = cu."userId" WHERE not(p.deleted) and p."subjectId" IN (SELECT DISTINCT l."subjectId" FROM "Teacher" prof INNER JOIN "Lectures" l ON prof."regNumber" = l."regNumber" WHERE prof."userId" = ${user.userId}) ORDER BY p."projectId" DESC`);
+        results = sequelize.query(`SELECT p."projectId", p.name, p."expectedResult", p.status, p."createdAt", s.name AS "Subject", u."fullName" FROM "Project" p LEFT JOIN "Subject" s ON p."subjectId" = s."subjectId" LEFT JOIN "User" u ON p."userId" = u."userId" WHERE not(p.deleted) and p."subjectId" IN (SELECT DISTINCT l."subjectId" FROM "User_Properties" up INNER JOIN "Lectures" l ON up."userId" = l."userId" WHERE up."userId" = ${user.userId}) ORDER BY p."projectId" DESC`);
       } else {
-        results = sequelize.query(`SELECT p."projectId", p.name, p."expectedResult", p.status, p."createdAt", s.name AS "Subject", cu."fullName" FROM "Project" p LEFT JOIN "Subject" s on p."subjectId" = s."subjectId" LEFT JOIN "Common_User" cu on p."userId" = cu."userId" WHERE not(p.deleted) and p."userId" = ${user.userId} ORDER BY p."projectId" DESC`);
+        results = sequelize.query(`SELECT p."projectId", p.name, p."expectedResult", p.status, p."createdAt", s.name AS "Subject", u."fullName" FROM "Project" p LEFT JOIN "Subject" s on p."subjectId" = s."subjectId" LEFT JOIN "User" u on p."userId" = u."userId" WHERE not(p.deleted) and p."userId" = ${user.userId} ORDER BY p."projectId" DESC`);
       }
       results.then((response) => {
         resolve(response[0]);
@@ -41,7 +41,7 @@ module.exports = {
 
   getUserData: (userId) => {
     return new Promise((resolve, reject) => {
-      Common_User.findOne({
+      User.findOne({
         where: {
           userId,
         }
@@ -121,6 +121,8 @@ module.exports = {
         feedback: project.feedback,
         problem: project.problem,
         status: project.status,
+        image: project.projectImage,
+        pdf: project.projectPdf,
       }).then((response) => {
         resolve(response);
       }).catch((error) => {
@@ -133,14 +135,23 @@ module.exports = {
     return new Promise(async (resolve, reject) => {
       const projectId = project.projectid;
       const subjectId = project.subjectid;
+
       const name = project.name;
-      const expectedResult = project.expectedresult;
+      const expectedResult = project.expectedResult;
+      const feedback = project.feedback;
       const problem = project.problem; 
+      const status = project.status;
+      const image = project.projectImage; 
+      const pdf = project.projectPdf; 
       Project.update({
         subjectId,
         name,
         expectedResult,
+        feedback,
         problem,
+        status,
+        image,
+        pdf,
       }, {
         where: {
           projectId,
@@ -153,6 +164,14 @@ module.exports = {
         });
     });
   },
+
+  getProjects: () => new Promise((resolve, reject) => {
+    Project.findAll({
+      order: [['projectId', 'DESC']]
+    }).then((response) => {
+      resolve(response);
+    }).catch((e) => reject(e));
+  }),
 
   deleteProject: (projectId) => {
     return new Promise((resolve, reject) => {

@@ -31,6 +31,12 @@ routes.put('/project', (req, res) => {
   });
 });
 
+routes.get('/project', (req, res) => {
+  projectController.getProjects().then((response) => {
+    res.status(200).json(response);
+  });
+});
+
 // TODO: check if the records already exist
 routes.put('/project/evaluate', (req, res) => {
   projectController.evaluateProject(req.body).then((response) => {

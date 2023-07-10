@@ -1,6 +1,6 @@
 const sequelize = require('../../../src/db/AppDb');
 const Project = require('../../../src/db/model/Project');
-const Common_User = require('../../../src/db/model/Common_User');
+const User = require('../../../src/db/model/User');
 const Summarize = require('../../../src/db/model/Summarize');
 const Abstracts = require('../../../src/db/model/Abstracts');
 
@@ -20,7 +20,7 @@ jest.mock('../../../src/db/model/Project', () => {
   };
 });
 
-jest.mock('../../../src/db/model/Common_User', () => {
+jest.mock('../../../src/db/model/User', () => {
   return {
     create: jest.fn(),
     findAll: jest.fn(),
@@ -57,7 +57,7 @@ describe('Repository', () => {
       const result = await projectRepository.getUserProposals(user);
 
       expect(result).toBe(expectedResult);
-      expect(sequelize.query).toHaveBeenCalledWith(`SELECT p."projectId", p.name, p."expectedResult", p.status, p."createdAt", s.name AS "Subject", cu."fullName" FROM "Project" p LEFT JOIN "Subject" s on p."subjectId" = s."subjectId" LEFT JOIN "Common_User" cu on p."userId" = cu."userId" WHERE not(p.deleted) ORDER BY p."projectId" DESC`);
+      expect(sequelize.query).toHaveBeenCalledWith(`SELECT p."projectId", p.name, p."expectedResult", p.status, p."createdAt", s.name AS "Subject", u."fullName" FROM "Project" p LEFT JOIN "Subject" s on p."subjectId" = s."subjectId" LEFT JOIN "User" u on p."userId" = u."userId" WHERE not(p.deleted) ORDER BY p."projectId" DESC`);
     });
 
     it('should resolve with response from sequelize.query when user.operation is "projetos-disciplina"', async () => {
@@ -69,7 +69,7 @@ describe('Repository', () => {
       const result = await projectRepository.getUserProposals(user);
 
       expect(result).toBe(expectedResult);
-      expect(sequelize.query).toHaveBeenCalledWith(`SELECT p."projectId", p.name, p."expectedResult", p.status, p."createdAt", s.name AS "Subject", cu."fullName" FROM "Project" p LEFT JOIN "Subject" s ON p."subjectId" = s."subjectId" LEFT JOIN "Common_User" cu ON p."userId" = cu."userId" WHERE not(p.deleted) and p."subjectId" IN (SELECT DISTINCT l."subjectId" FROM "Teacher" prof INNER JOIN "Lectures" l ON prof."regNumber" = l."regNumber" WHERE prof."userId" = 1) ORDER BY p."projectId" DESC`);
+      expect(sequelize.query).toHaveBeenCalledWith(`SELECT p."projectId", p.name, p."expectedResult", p.status, p."createdAt", s.name AS "Subject", u."fullName" FROM "Project" p LEFT JOIN "Subject" s ON p."subjectId" = s."subjectId" LEFT JOIN "User" u ON p."userId" = u."userId" WHERE not(p.deleted) and p."subjectId" IN (SELECT DISTINCT l."subjectId" FROM "User_Properties" up INNER JOIN "Lectures" l ON up."userId" = l."userId" WHERE up."userId" = 1) ORDER BY p."projectId" DESC`);
     });
 
     it('should resolve with response from sequelize.query when user.operation is not "projetos" or "projetos-disciplina"', async () => {
@@ -81,7 +81,7 @@ describe('Repository', () => {
       const result = await projectRepository.getUserProposals(user);
 
       expect(result).toBe(expectedResult);
-      expect(sequelize.query).toHaveBeenCalledWith(`SELECT p."projectId", p.name, p."expectedResult", p.status, p."createdAt", s.name AS "Subject", cu."fullName" FROM "Project" p LEFT JOIN "Subject" s on p."subjectId" = s."subjectId" LEFT JOIN "Common_User" cu on p."userId" = cu."userId" WHERE not(p.deleted) and p."userId" = 1 ORDER BY p."projectId" DESC`);
+      expect(sequelize.query).toHaveBeenCalledWith(`SELECT p."projectId", p.name, p."expectedResult", p.status, p."createdAt", s.name AS "Subject", u."fullName" FROM "Project" p LEFT JOIN "Subject" s on p."subjectId" = s."subjectId" LEFT JOIN "User" u on p."userId" = u."userId" WHERE not(p.deleted) and p."userId" = 1 ORDER BY p."projectId" DESC`);
     });
 
     it('should reject with response when sequelize.query throws an error', async () => {
@@ -118,23 +118,23 @@ describe('Repository', () => {
   });
 
   describe('getUserData', () => {
-    it('should resolve with response from Common_User.findOne', async () => {
+    it('should resolve with response from User.findOne', async () => {
       const userId = 123;
       const expectedResult = { id: userId, name: 'User 1' };
 
-      Common_User.findOne.mockResolvedValue(expectedResult);
+      User.findOne.mockResolvedValue(expectedResult);
 
       const result = await projectRepository.getUserData(userId);
 
       expect(result).toBe(expectedResult);
-      expect(Common_User.findOne).toHaveBeenCalledWith({ where: { userId } });
+      expect(User.findOne).toHaveBeenCalledWith({ where: { userId } });
     });
 
-    it('should reject with error when Common_User.findOne throws an error', async () => {
+    it('should reject with error when User.findOne throws an error', async () => {
       const userId = 123;
       const expectedError = new Error('Database error');
 
-      Common_User.findOne.mockRejectedValue(expectedError);
+      User.findOne.mockRejectedValue(expectedError);
 
       await expect(projectRepository.getUserData(userId)).rejects.toThrow(expectedError);
     });
@@ -334,4 +334,25 @@ describe('Repository', () => {
       await expect(projectRepository.deleteProject(projectid)).rejects.toThrow(expectedError);
     });
   });
+
+  describe('getProjects', () => {
+    test('should get all projects in descending order', async () => {
+      const findAllSpy = jest.spyOn(Project, 'findAll').mockResolvedValue([{ projectId: 1 }, { projectId: 2 }]);
+  
+      const response = await projectRepository.getProjects();
+      expect(response).toBeDefined();
+      expect(findAllSpy).toHaveBeenCalledWith({ order: [['projectId', 'DESC']] });
+      expect(response.length).toEqual(2);
+      expect(response[0].projectId).toEqual(1);
+      expect(response[1].projectId).toEqual(2);
+    });
+  
+    test('should reject when getting all projects fails', async () => {
+      const findAllSpy = jest.spyOn(Project, 'findAll').mockRejectedValue(new Error('Failed to get all projects'));
+  
+      await expect(projectRepository.getProjects()).rejects.toThrowError('Failed to get all projects');
+      expect(findAllSpy).toHaveBeenCalledWith({ order: [['projectId', 'DESC']] });
+    });
+  });
+  
 });

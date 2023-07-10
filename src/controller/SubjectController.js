@@ -76,7 +76,7 @@ module.exports = {
             let professors = null;
             for(let i = 0; i < response.length; i++){
                 professors = await professorRepository.getProfessorsofSubject({subjectid: response[i].subjectId});
-                response[i]["professors"] = professors;
+                response[i]["professors"] = professors[0];
             }
             
             resolve(response);
@@ -188,7 +188,7 @@ const subjectUtils = {
     addSubjectProfessorRelation: async (subject, professors) => {
         for await (const professor of professors) {
             await professorRepository.addProfessorSubjectRelation({
-                regnumber: professor.regNumber,
+                userId: professor.userId,
                 subjectid: subject.subjectId,
             });
         }

@@ -2,15 +2,15 @@ const { DataTypes } = require('sequelize');
 const database = require('../AppDb');
 
 const Lectures = database.define('Lectures', {
-    regNumber: {
-        type: DataTypes.STRING,
+    userId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: {
-                tableName: "Teacher",
+                tableName: "User",
                 schema: "public",
             },
-            key: "regNumber"
+            key: "userId"
         },
     },
     subjectId: {
