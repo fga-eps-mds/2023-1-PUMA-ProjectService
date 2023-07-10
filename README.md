@@ -251,7 +251,7 @@ Esse endpoint deleta um _subject_
 
 ### Como rodar
 
-Para utilizar o projeto com todos os microsserviços, siga as intruções de como rodar no [Api Gateway](https://github.com/fga-eps-mds/2021-1-PUMA-ApiGateway). Para buildar e iniciar este serviço individualmente, execute:
+Para utilizar o projeto com todos os microsserviços, siga as intruções de como rodar no [Api Gateway](https://github.com/fga-eps-mds/2023-1-PUMA-ApiGateway). Para buildar e iniciar este serviço individualmente, execute:
 
 ``` $ make dev ```
 
@@ -269,8 +269,6 @@ Para encerrar os containers de desenvolvimento execute:
 
 Para rodar os testes, execute:
 
-``` $ sudo make test```
-
-``` $ sudo make test-debug```
+``` $ npm run test```
 
 É necessário preencher o arquivo .env na raiz com as informações necessárias.
