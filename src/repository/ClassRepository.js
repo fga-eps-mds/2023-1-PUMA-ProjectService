@@ -90,7 +90,7 @@ module.exports = {
                 userId: classesTeacher[i],
                 classId: response.classId,
               })
-                .then(() => {})
+                .then(() => { })
                 .catch((e) => reject(e));
             }
 
@@ -101,7 +101,7 @@ module.exports = {
                 start: classesSchedule[i].start,
                 finish: classesSchedule[i].end,
               })
-                .then(() => {})
+                .then(() => { })
                 .catch((e) => reject(e));
             }
 
@@ -135,7 +135,7 @@ module.exports = {
                     userId: classesTeacher[i],
                     classId: classId,
                   })
-                    .then(() => {})
+                    .then(() => { })
                     .catch((e) => reject(e));
                 }
               })
@@ -156,7 +156,7 @@ module.exports = {
                     start: classesSchedule[i].start,
                     finish: classesSchedule[i].end,
                   })
-                    .then((res) => {})
+                    .then((res) => { })
                     .catch((e) => reject(e));
                 }
               })
