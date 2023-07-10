@@ -121,9 +121,13 @@ describe("ClassesRepository", () => {
         },
         { where: { classId: input.classId } }
       );
-      expect(Classes_Teacher.destroy).toHaveBeenCalledWith({ where: { classId: input.classid } });
+      expect(Classes_Teacher.destroy).toHaveBeenCalledWith({
+        where: { classId: input.classId },
+      });
       expect(Classes_Teacher.create).toHaveBeenCalledTimes(2);
-      expect(Classes_Schedule.destroy).toHaveBeenCalledWith({ where: { classId: input.classid } });
+      expect(Classes_Schedule.destroy).toHaveBeenCalledWith({
+        where: { classId: input.classId },
+      });
       expect(Classes_Schedule.create).toHaveBeenCalledTimes(2);
     });
 
