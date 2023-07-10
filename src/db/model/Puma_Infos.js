@@ -8,7 +8,15 @@ const Puma_Infos = database.define('Puma_Infos',{
         autoIncrement: true,
         primaryKey: true,
     },
+    titleDescription: {
+        type: DataTypes.TEXT,
+        allowNull: false
+    },
     description: {
+        type: DataTypes.TEXT,
+        allowNull: false
+    },
+    titleGoal: {
         type: DataTypes.TEXT,
         allowNull: false
     },
@@ -16,9 +24,21 @@ const Puma_Infos = database.define('Puma_Infos',{
         type: DataTypes.TEXT,
         allowNull: false
     },
+    titleMethodology: {
+        type: DataTypes.TEXT,
+        allowNull: false
+    },
     methodology: {
         type: DataTypes.TEXT,
         allowNull: false
+    },
+    titleTeachers: {
+        type: DataTypes.TEXT,
+        allowNull: false
+    },
+    descriptionImage:{
+        type: DataTypes.TEXT,
+        allowNull: true
     },
     methodologyImage:{
         type: DataTypes.TEXT,
