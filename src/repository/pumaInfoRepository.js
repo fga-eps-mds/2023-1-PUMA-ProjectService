@@ -77,9 +77,14 @@ module.exports = {
 
       await Puma_Infos.update(
         {
+          titleDescription: pumaItem.titleDescription,
           description: pumaItem.description,
+          titleGoal: pumaItem.titleGoal,
           goal: pumaItem.goal,
+          titleMethodology: pumaItem.titleMethodology,
           methodology: pumaItem.methodology,
+          titleTeachers: pumaItem.titleTeachers,
+          descriptionImage: pumaItem.descriptionImage,
           methodologyImage: pumaItem.methodologyImage,
           goalImage: pumaItem.goalImage,
         },
@@ -109,11 +114,15 @@ module.exports = {
     }),
 
   update_more_info: async (moreInfos) => {
+    const objs = await More_info.findAll()
+    var objsIds = []
+    objs.forEach(e => objsIds.push(e.moreInfoId))
     const ids = moreInfos.map(item => item.moreInfoId)
     if (moreInfos) {
       for (const moreInfo of moreInfos) {
-        if (!ids.includes(moreInfo.moreInfoId)) {
+        if (!objsIds.includes(moreInfo.moreInfoId)) {
           await More_info.create({
+            infoId: 1,
             title: moreInfo.title,
             description: moreInfo.description,
           });
@@ -141,7 +150,6 @@ module.exports = {
   },
 
   update_sections: async (sections) => {
-
     const ids = []
     sections.forEach(element => {
       element.forEach(item => {
