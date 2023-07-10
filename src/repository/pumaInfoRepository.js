@@ -37,7 +37,8 @@ module.exports = {
             ...teacher,
             fullName: teacherComplementaryInfos.fullName,
             email: teacherComplementaryInfos.email,
-            phoneNumber: teacherComplementaryInfos.phoneNumber
+            phoneNumber: teacherComplementaryInfos.phoneNumber,
+            image: teacherComplementaryInfos.image
           })
         }
 
